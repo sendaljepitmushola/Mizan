@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mizan - Referensi Hadis Terpercaya</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mizan: {
+                            navy: '#0D1B2A',
+                            gold: '#D4AF37',
+                            bg: '#F8FAFC',
+                            cardBg: '#FFFFFF',
+                            textDark: '#1E293B',
+                            textMuted: '#64748B',
+                            border: '#E6E9EF'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        arabic: ['Noto Naskh Arabic', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-mizan-bg font-sans text-mizan-textDark antialiased pb-24 select-none">
+
+    <!-- TOP HEADER -->
+    <header class="bg-mizan-navy text-white px-5 pt-8 pb-10 rounded-b-[2.5rem] shadow-lg relative">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-2xl bg-mizan-navy border border-mizan-gold/40 flex items-center justify-center text-mizan-gold shadow-md">
+                    <i data-lucide="scale" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-wider text-white">MIZAN</h1>
+                    <p class="text-[10px] text-mizan-gold font-medium">Referensi Hadis Terpercaya</p>
+                </div>
+            </div>
+            <button class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white relative">
+                <i data-lucide="bell" class="w-5 h-5"></i>
+                <span class="w-2 h-2 rounded-full bg-mizan-gold absolute top-2.5 right-2.5"></span>
+            </button>
+        </div>
+
+        <!-- FLOATING SEARCH BAR -->
+        <div class="absolute -bottom-6 left-5 right-5">
+            <div class="bg-white rounded-2xl p-3 shadow-xl border border-slate-100 flex items-center gap-3">
+                <i data-lucide="search" class="w-5 h-5 text-mizan-textMuted ml-2"></i>
+                <input type="text" placeholder="Cari hadis, kitab, atau perawi..." class="w-full text-sm bg-transparent focus:outline-none text-mizan-textDark placeholder-slate-400">
+                <button class="p-2 text-mizan-textMuted hover:text-mizan-navy">
+                    <i data-lucide="sliders-horizontal" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="px-5 pt-12 space-y-7">
+
+        <!-- AKSES CEPAT -->
+        <section class="space-y-3">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-mizan-textDark">Akses Cepat</h2>
+            <div class="grid grid-cols-4 gap-3">
+                <a href="#" class="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center gap-2 text-center">
+                    <div class="w-10 h-10 rounded-xl bg-slate-50 text-mizan-navy flex items-center justify-center">
+                        <i data-lucide="book-open" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-[10px] font-semibold text-mizan-textDark">Semua Kitab</span>
+                </a>
+                <a href="#" class="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center gap-2 text-center">
+                    <div class="w-10 h-10 rounded-xl bg-slate-50 text-mizan-navy flex items-center justify-center">
+                        <i data-lucide="bookmark" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-[10px] font-semibold text-mizan-textDark">Bookmark</span>
+                </a>
+                <a href="#" class="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center gap-2 text-center">
+                    <div class="w-10 h-10 rounded-xl bg-slate-50 text-mizan-navy flex items-center justify-center">
+                        <i data-lucide="history" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-[10px] font-semibold text-mizan-textDark">Terakhir Dibaca</span>
+                </a>
+                <a href="#" class="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center gap-2 text-center">
+                    <div class="w-10 h-10 rounded-xl bg-slate-50 text-mizan-gold flex items-center justify-center">
+                        <i data-lucide="star" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-[10px] font-semibold text-mizan-textDark">Hadis Pilihan</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- LANJUTKAN MEMBACA -->
+        <section class="space-y-3">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-mizan-textDark">Lanjutkan Membaca</h2>
+            <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-4">
+                <div class="w-16 h-20 bg-emerald-900 rounded-xl flex flex-col items-center justify-center text-amber-100 shrink-0 border border-emerald-700 p-1 text-center shadow-inner">
+                    <span class="font-arabic text-xs font-bold">صحيح البخاري</span>
+                    <span class="text-[8px] mt-1 border-t border-emerald-700/60 pt-0.5 w-full">Sahih al-Bukhari</span>
+                </div>
+                <div class="flex-1 space-y-2">
+                    <div>
+                        <h3 class="text-xs font-bold text-mizan-navy">Sahih al-Bukhari</h3>
+                        <p class="font-arabic text-xs text-slate-600 mt-0.5" dir="rtl">كتاب بدء الوحي</p>
+                        <p class="text-[10px] text-mizan-textMuted mt-0.5">Bab: Permulaan Wahyu • Hadis 1</p>
+                    </div>
+                    <!-- Progress Bar -->
+                    <div class="space-y-1">
+                        <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                            <div class="bg-mizan-gold h-full rounded-full" style="width: 25%"></div>
+                        </div>
+                        <div class="flex items-center justify-between text-[9px] text-mizan-textMuted">
+                            <span>25% selesai</span>
+                            <a href="#" class="text-mizan-gold font-semibold flex items-center gap-0.5">Lanjutkan <i data-lucide="play" class="w-2.5 h-2.5 fill-current"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RINGKASAN STATS -->
+        <section class="space-y-3">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-mizan-textDark">Ringkasan</h2>
+            <div class="grid grid-cols-4 gap-2 bg-white p-3 rounded-2xl border border-slate-100 shadow-sm text-center">
+                <div class="space-y-1 border-r border-slate-100">
+                    <i data-lucide="book-open" class="w-4 h-4 text-mizan-navy mx-auto"></i>
+                    <h4 class="text-sm font-bold text-mizan-navy">123</h4>
+                    <p class="text-[9px] text-mizan-textMuted">Kitab</p>
+                </div>
+                <div class="space-y-1 border-r border-slate-100">
+                    <i data-lucide="file-text" class="w-4 h-4 text-emerald-600 mx-auto"></i>
+                    <h4 class="text-sm font-bold text-mizan-navy">24.532</h4>
+                    <p class="text-[9px] text-mizan-textMuted">Hadis</p>
+                </div>
+                <div class="space-y-1 border-r border-slate-100">
+                    <i data-lucide="users" class="w-4 h-4 text-purple-600 mx-auto"></i>
+                    <h4 class="text-sm font-bold text-mizan-navy">5.812</h4>
+                    <p class="text-[9px] text-mizan-textMuted">Perawi</p>
+                </div>
+                <div class="space-y-1">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-amber-600 mx-auto"></i>
+                    <h4 class="text-sm font-bold text-mizan-navy">96%</h4>
+                    <p class="text-[9px] text-mizan-textMuted">Terverifikasi</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- KITAB TERPOPULER -->
+        <section class="space-y-3">
+            <div class="flex items-center justify-between">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-mizan-textDark">Kitab Terpopuler</h2>
+                <a href="#" class="text-[11px] font-semibold text-mizan-navy hover:text-mizan-gold flex items-center gap-0.5">Lihat Semua <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i></a>
+            </div>
+
+            <!-- Horizontal Scrollable Container -->
+            <div class="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-none -mx-5 px-5">
+                
+                <!-- Card 1 -->
+                <div class="w-28 shrink-0 bg-white p-2.5 rounded-2xl border border-slate-100 shadow-sm space-y-2">
+                    <div class="w-full h-28 bg-emerald-900 rounded-xl flex flex-col items-center justify-center p-2 text-center text-amber-100 border border-emerald-700 shadow-inner">
+                        <span class="font-arabic text-xs font-bold">صحيح البخاري</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-[11px] text-mizan-navy truncate">Sahih al-Bukhari</h4>
+                        <p class="text-[9px] text-mizan-textMuted">7.275 hadis</p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="w-28 shrink-0 bg-white p-2.5 rounded-2xl border border-slate-100 shadow-sm space-y-2">
+                    <div class="w-full h-28 bg-slate-900 rounded-xl flex flex-col items-center justify-center p-2 text-center text-amber-100 border border-slate-700 shadow-inner">
+                        <span class="font-arabic text-xs font-bold">صحيح مسلم</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-[11px] text-mizan-navy truncate">Sahih Muslim</h4>
+                        <p class="text-[9px] text-mizan-textMuted">4.056 hadis</p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="w-28 shrink-0 bg-white p-2.5 rounded-2xl border border-slate-100 shadow-sm space-y-2">
+                    <div class="w-full h-28 bg-amber-900 rounded-xl flex flex-col items-center justify-center p-2 text-center text-amber-100 border border-amber-700 shadow-inner">
+                        <span class="font-arabic text-xs font-bold">سنن أبي داود</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-[11px] text-mizan-navy truncate">Sunan Abu Dawud</h4>
+                        <p class="text-[9px] text-mizan-textMuted">4.802 hadis</p>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="w-28 shrink-0 bg-white p-2.5 rounded-2xl border border-slate-100 shadow-sm space-y-2">
+                    <div class="w-full h-28 bg-purple-950 rounded-xl flex flex-col items-center justify-center p-2 text-center text-amber-100 border border-purple-800 shadow-inner">
+                        <span class="font-arabic text-xs font-bold">جامع الترمذي</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-[11px] text-mizan-navy truncate">Jami' at-Tirmidzi</h4>
+                        <p class="text-[9px] text-mizan-textMuted">3.957 hadis</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- BOTTOM NAVIGATION BAR -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 px-6 py-2 flex items-center justify-between z-50 shadow-lg">
+        <a href="#" class="flex flex-col items-center gap-1 text-mizan-navy font-semibold text-[10px]">
+            <i data-lucide="home" class="w-5 h-5"></i>
+            <span>Beranda</span>
+        </a>
+        <a href="#" class="flex flex-col items-center gap-1 text-mizan-textMuted hover:text-mizan-navy text-[10px]">
+            <i data-lucide="layers" class="w-5 h-5"></i>
+            <span>Kitab</span>
+        </a>
+        <a href="#" class="flex flex-col items-center gap-1 text-mizan-textMuted hover:text-mizan-navy text-[10px]">
+            <i data-lucide="search" class="w-5 h-5"></i>
+            <span>Cari</span>
+        </a>
+        <a href="#" class="flex flex-col items-center gap-1 text-mizan-textMuted hover:text-mizan-navy text-[10px]">
+            <i data-lucide="bookmark" class="w-5 h-5"></i>
+            <span>Bookmark</span>
+        </a>
+        <a href="#" class="flex flex-col items-center gap-1 text-mizan-textMuted hover:text-mizan-navy text-[10px]">
+            <i data-lucide="user" class="w-5 h-5"></i>
+            <span>Akun</span>
+        </a>
+    </nav>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
