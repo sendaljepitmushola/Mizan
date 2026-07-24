@@ -3,30 +3,400 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Mizan</title>
-
-    <link rel="stylesheet" href="css/style.css">
+    <title>Project Mizan - Mesin Pencari Hadis</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mizan: {
+                            navy: '#0D1B2A',
+                            gold: '#D4AF37',
+                            goldHover: '#B59228',
+                            bg: '#F8FAFC',
+                            cardBg: '#FFFFFF',
+                            textDark: '#1E293B',
+                            textMuted: '#64748B'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        arabic: ['Noto Naskh Arabic', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+<body class="bg-mizan-bg font-sans text-mizan-textDark antialiased min-h-screen flex flex-col justify-between">
 
-<body>
-
-    <header>
-        <h1>📖 Project Mizan</h1>
-        <p>Mesin Pencarian Hadis</p>
+    <!-- HEADER / NAVBAR -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Navigation Links -->
+            <nav class="flex items-center space-x-8 text-sm font-medium">
+                <a href="#" class="flex items-center gap-2 text-mizan-navy font-semibold border-b-2 border-mizan-navy pb-1">
+                    <i data-lucide="home" class="w-4 h-4"></i> Beranda
+                </a>
+                <a href="#" class="flex items-center gap-2 text-mizan-textMuted hover:text-mizan-navy transition">
+                    <i data-lucide="search" class="w-4 h-4"></i> Pencarian
+                </a>
+                <a href="#" class="flex items-center gap-2 text-mizan-textMuted hover:text-mizan-navy transition">
+                    <i data-lucide="bookmark" class="w-4 h-4"></i> Bookmark
+                </a>
+                <a href="#" class="flex items-center gap-2 text-mizan-textMuted hover:text-mizan-navy transition">
+                    <i data-lucide="info" class="w-4 h-4"></i> Tentang
+                </a>
+            </nav>
+        </div>
     </header>
 
-    <main>
+    <!-- MAIN CONTENT -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-12">
 
-        <h2>Daftar Kitab</h2>
+        <!-- HERO SECTION -->
+        <section class="flex flex-col md:flex-row items-center justify-between gap-8 py-6">
+            <!-- Branding & Title -->
+            <div class="flex flex-col items-start max-w-lg space-y-4">
+                <div class="flex items-center gap-3">
+                    <!-- Logo Icon Placeholder -->
+                    <div class="w-16 h-16 rounded-2xl bg-mizan-navy flex items-center justify-center text-mizan-gold shadow-lg">
+                        <i data-lucide="scale" class="w-10 h-10"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold tracking-wider text-mizan-navy">PROJECT MIZAN</h1>
+                        <p class="text-xs uppercase tracking-widest text-mizan-gold font-semibold">Mesin Pencari Hadis</p>
+                    </div>
+                </div>
+                <p class="text-xs text-mizan-textMuted">
+                    Designed & Developed by <span class="font-semibold text-mizan-navy">Deny D</span> <span class="italic">--sendaljepitmushola--</span>
+                </p>
+                
+                <div class="pt-4">
+                    <h2 class="text-4xl sm:text-5xl font-extrabold text-mizan-navy leading-tight">
+                        Temukan Hadis.<br>Pahami. <span class="text-mizan-gold">Amalkan.</span>
+                    </h2>
+                    <p class="text-sm text-mizan-textMuted mt-2">Sumber autentik. Referensi terpercaya.</p>
+                </div>
+            </div>
 
-        <div id="books">
-            Memuat daftar kitab...
-        </div>
+            <!-- Hero Illustration Placeholder -->
+            <div class="hidden md:flex items-center justify-center relative w-80 h-80 bg-gradient-to-br from-amber-50 to-slate-100 rounded-3xl border border-amber-100/60 shadow-inner">
+                <i data-lucide="book-open-check" class="w-32 h-32 text-mizan-gold opacity-80"></i>
+            </div>
+        </section>
+
+        <!-- SEARCH BAR SECTION -->
+        <section class="max-w-4xl mx-auto">
+            <div class="bg-white p-3 sm:p-4 rounded-2xl shadow-xl border border-slate-100 flex flex-col md:flex-row items-center gap-3">
+                <div class="flex items-center gap-3 flex-1 px-4 w-full">
+                    <i data-lucide="search" class="w-6 h-6 text-mizan-textMuted"></i>
+                    <input type="text" placeholder="Cari hadis, perawi, tema, atau kata kunci..." class="w-full text-base focus:outline-none text-mizan-textDark placeholder-slate-400 bg-transparent py-2">
+                </div>
+                <button class="w-full md:w-auto bg-mizan-navy hover:bg-slate-800 text-white font-semibold px-8 py-3.5 rounded-xl transition flex items-center justify-center gap-2 shadow-md">
+                    Cari Hadis
+                </button>
+            </div>
+            
+            <!-- Quick Suggestion Tags -->
+            <div class="flex flex-wrap items-center justify-center gap-2 mt-4 text-xs text-mizan-textMuted">
+                <span class="font-medium">Contoh pencarian:</span>
+                <button class="bg-white hover:bg-slate-100 border border-slate-200 px-3 py-1 rounded-full transition">niat</button>
+                <button class="bg-white hover:bg-slate-100 border border-slate-200 px-3 py-1 rounded-full transition">iman</button>
+                <button class="bg-white hover:bg-slate-100 border border-slate-200 px-3 py-1 rounded-full transition">shalat</button>
+                <button class="bg-white hover:bg-slate-100 border border-slate-200 px-3 py-1 rounded-full transition">puasa</button>
+                <button class="bg-white hover:bg-slate-100 border border-slate-200 px-3 py-1 rounded-full transition">zakat</button>
+                <button class="bg-white hover:bg-slate-100 border border-slate-200 px-3 py-1 rounded-full transition">jihad</button>
+                <button class="bg-white hover:bg-slate-100 border border-slate-200 px-3 py-1 rounded-full transition">akhlak</button>
+            </div>
+        </section>
+
+        <!-- STATS BAR -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+            <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                    <i data-lucide="book-open" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-mizan-navy">6</h3>
+                    <p class="text-xs font-medium text-mizan-navy">Kitab Hadis</p>
+                    <p class="text-[10px] text-mizan-textMuted">Koleksi tersedia</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                    <i data-lucide="file-text" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-mizan-navy">~ 60.000+</h3>
+                    <p class="text-xs font-medium text-mizan-navy">Total Hadis</p>
+                    <p class="text-[10px] text-mizan-textMuted">Tersedia dalam database</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
+                    <i data-lucide="users" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-mizan-navy">1.000+</h3>
+                    <p class="text-xs font-medium text-mizan-navy">Perawi</p>
+                    <p class="text-[10px] text-mizan-textMuted">Data perawi hadis</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+                    <i data-lucide="shield-check" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-mizan-navy">100%</h3>
+                    <p class="text-xs font-medium text-mizan-navy">Gratis & Terbuka</p>
+                    <p class="text-[10px] text-mizan-textMuted">Untuk semua umat</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- KOLEKSI KITAB HADIS -->
+        <section class="space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-xl font-bold text-mizan-navy flex items-center gap-2">
+                        <i data-lucide="book" class="w-5 h-5 text-mizan-gold"></i> Koleksi Kitab Hadis
+                    </h3>
+                    <p class="text-xs text-mizan-textMuted mt-1">Jelajahi koleksi kitab hadis utama yang telah kami sediakan.</p>
+                </div>
+                <a href="#" class="text-xs font-semibold text-mizan-navy hover:text-mizan-gold transition flex items-center gap-1 border border-slate-200 bg-white px-4 py-2 rounded-xl">
+                    Lihat Semua Kitab <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <!-- Grid Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+                
+                <!-- Card 1: Sahih Bukhari -->
+                <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                    <div class="w-full h-40 bg-emerald-900 rounded-xl flex flex-col items-center justify-center p-3 text-center text-amber-100 shadow-inner border border-emerald-700">
+                        <span class="font-arabic text-xl font-bold">صحيح البخاري</span>
+                        <span class="text-xs font-semibold mt-2 border-t border-emerald-700/60 pt-1 w-full">Sahih Bukhari</span>
+                    </div>
+                    <div class="space-y-1">
+                        <h4 class="font-bold text-sm text-mizan-navy">Sahih Bukhari</h4>
+                        <p class="text-[11px] font-medium text-emerald-600">Imam Bukhari</p>
+                        <p class="text-[10px] text-mizan-textMuted flex items-center gap-1 mt-1">
+                            <i data-lucide="book-open" class="w-3 h-3"></i> 7.277 Hadis
+                        </p>
+                        <p class="text-[11px] text-slate-500 pt-2 line-clamp-2">Kitab hadis paling shahih setelah Al-Qur'an.</p>
+                    </div>
+                    <button class="w-full bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold py-2 rounded-lg transition flex items-center justify-center gap-1">
+                        Buka Kitab <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                    </button>
+                </div>
+
+                <!-- Card 2: Sahih Muslim -->
+                <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                    <div class="w-full h-40 bg-slate-900 rounded-xl flex flex-col items-center justify-center p-3 text-center text-amber-100 shadow-inner border border-slate-700">
+                        <span class="font-arabic text-xl font-bold">صحيح مسلم</span>
+                        <span class="text-xs font-semibold mt-2 border-t border-slate-700/60 pt-1 w-full">Sahih Muslim</span>
+                    </div>
+                    <div class="space-y-1">
+                        <h4 class="font-bold text-sm text-mizan-navy">Sahih Muslim</h4>
+                        <p class="text-[11px] font-medium text-blue-600">Imam Muslim</p>
+                        <p class="text-[10px] text-mizan-textMuted flex items-center gap-1 mt-1">
+                            <i data-lucide="book-open" class="w-3 h-3"></i> 7.459 Hadis
+                        </p>
+                        <p class="text-[11px] text-slate-500 pt-2 line-clamp-2">Koleksi hadis shahih yang sangat penting.</p>
+                    </div>
+                    <button class="w-full bg-mizan-navy hover:bg-slate-800 text-white text-xs font-semibold py-2 rounded-lg transition flex items-center justify-center gap-1">
+                        Buka Kitab <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                    </button>
+                </div>
+
+                <!-- Card 3: Sunan Abu Dawud -->
+                <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                    <div class="w-full h-40 bg-amber-900 rounded-xl flex flex-col items-center justify-center p-3 text-center text-amber-100 shadow-inner border border-amber-700">
+                        <span class="font-arabic text-xl font-bold">سنن أبي داود</span>
+                        <span class="text-xs font-semibold mt-2 border-t border-amber-700/60 pt-1 w-full">Sunan Abu Dawud</span>
+                    </div>
+                    <div class="space-y-1">
+                        <h4 class="font-bold text-sm text-mizan-navy">Sunan Abu Dawud</h4>
+                        <p class="text-[11px] font-medium text-amber-700">Imam Abu Dawud</p>
+                        <p class="text-[10px] text-mizan-textMuted flex items-center gap-1 mt-1">
+                            <i data-lucide="book-open" class="w-3 h-3"></i> 4.800 Hadis
+                        </p>
+                        <p class="text-[11px] text-slate-500 pt-2 line-clamp-2">Membahas hukum-hukum amal perbuatan.</p>
+                    </div>
+                    <button class="w-full bg-amber-700 hover:bg-amber-800 text-white text-xs font-semibold py-2 rounded-lg transition flex items-center justify-center gap-1">
+                        Buka Kitab <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                    </button>
+                </div>
+
+                <!-- Card 4: Jami' at-Tirmidzi -->
+                <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                    <div class="w-full h-40 bg-purple-950 rounded-xl flex flex-col items-center justify-center p-3 text-center text-amber-100 shadow-inner border border-purple-800">
+                        <span class="font-arabic text-xl font-bold">جامع الترمذي</span>
+                        <span class="text-xs font-semibold mt-2 border-t border-purple-800/60 pt-1 w-full">Jami' at-Tirmidzi</span>
+                    </div>
+                    <div class="space-y-1">
+                        <h4 class="font-bold text-sm text-mizan-navy">Jami' at-Tirmidzi</h4>
+                        <p class="text-[11px] font-medium text-purple-700">Imam Tirmidzi</p>
+                        <p class="text-[10px] text-mizan-textMuted flex items-center gap-1 mt-1">
+                            <i data-lucide="book-open" class="w-3 h-3"></i> 3.956 Hadis
+                        </p>
+                        <p class="text-[11px] text-slate-500 pt-2 line-clamp-2">Hadis dengan berbagai pembahasan hukum.</p>
+                    </div>
+                    <button class="w-full bg-purple-800 hover:bg-purple-900 text-white text-xs font-semibold py-2 rounded-lg transition flex items-center justify-center gap-1">
+                        Buka Kitab <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                    </button>
+                </div>
+
+                <!-- Card 5: Sunan an-Nasa'i -->
+                <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                    <div class="w-full h-40 bg-teal-900 rounded-xl flex flex-col items-center justify-center p-3 text-center text-amber-100 shadow-inner border border-teal-700">
+                        <span class="font-arabic text-xl font-bold">سنن النسائي</span>
+                        <span class="text-xs font-semibold mt-2 border-t border-teal-700/60 pt-1 w-full">Sunan an-Nasa'i</span>
+                    </div>
+                    <div class="space-y-1">
+                        <h4 class="font-bold text-sm text-mizan-navy">Sunan an-Nasa'i</h4>
+                        <p class="text-[11px] font-medium text-teal-700">Imam An-Nasa'i</p>
+                        <p class="text-[10px] text-mizan-textMuted flex items-center gap-1 mt-1">
+                            <i data-lucide="book-open" class="w-3 h-3"></i> 5.762 Hadis
+                        </p>
+                        <p class="text-[11px] text-slate-500 pt-2 line-clamp-2">Sunan yang membahas berbagai aspek Islam.</p>
+                    </div>
+                    <button class="w-full bg-teal-700 hover:bg-teal-800 text-white text-xs font-semibold py-2 rounded-lg transition flex items-center justify-center gap-1">
+                        Buka Kitab <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                    </button>
+                </div>
+
+                <!-- Card 6: Sunan Ibnu Majah -->
+                <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                    <div class="w-full h-40 bg-red-950 rounded-xl flex flex-col items-center justify-center p-3 text-center text-amber-100 shadow-inner border border-red-800">
+                        <span class="font-arabic text-xl font-bold">سنن ابن ماجه</span>
+                        <span class="text-xs font-semibold mt-2 border-t border-red-800/60 pt-1 w-full">Sunan Ibnu Majah</span>
+                    </div>
+                    <div class="space-y-1">
+                        <h4 class="font-bold text-sm text-mizan-navy">Sunan Ibnu Majah</h4>
+                        <p class="text-[11px] font-medium text-red-700">Imam Ibnu Majah</p>
+                        <p class="text-[10px] text-mizan-textMuted flex items-center gap-1 mt-1">
+                            <i data-lucide="book-open" class="w-3 h-3"></i> 4.341 Hadis
+                        </p>
+                        <p class="text-[11px] text-slate-500 pt-2 line-clamp-2">Hadis-hadis tentang hukum dan kehidupan.</p>
+                    </div>
+                    <button class="w-full bg-red-800 hover:bg-red-900 text-white text-xs font-semibold py-2 rounded-lg transition flex items-center justify-center gap-1">
+                        Buka Kitab <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FEATURE HIGHLIGHTS -->
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-6">
+            <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex items-start gap-4">
+                <div class="w-10 h-10 rounded-xl bg-slate-100 text-mizan-navy flex items-center justify-center shrink-0">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-mizan-navy">Pencarian Cepat</h4>
+                    <p class="text-xs text-mizan-textMuted mt-1">Cari hadis dengan cepat berdasarkan kata kunci, perawi, atau tema.</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex items-start gap-4">
+                <div class="w-10 h-10 rounded-xl bg-slate-100 text-emerald-600 flex items-center justify-center shrink-0">
+                    <i data-lucide="check-circle" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-mizan-navy">Sumber Terpercaya</h4>
+                    <p class="text-xs text-mizan-textMuted mt-1">Bersumber dari kitab hadis shahih dengan penilaian keaslian hadis.</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex items-start gap-4">
+                <div class="w-10 h-10 rounded-xl bg-slate-100 text-purple-600 flex items-center justify-center shrink-0">
+                    <i data-lucide="bookmark" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-mizan-navy">Simpan & Kelola</h4>
+                    <p class="text-xs text-mizan-textMuted mt-1">Simpan hadis favorit Anda dan akses kapan saja dengan mudah.</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex items-start gap-4">
+                <div class="w-10 h-10 rounded-xl bg-slate-100 text-amber-600 flex items-center justify-center shrink-0">
+                    <i data-lucide="lightbulb" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-mizan-navy">Tafsir & Penjelasan</h4>
+                    <p class="text-xs text-mizan-textMuted mt-1">Pahami makna hadis dengan tafsir ringkas dan penjelasan yang mudah dipahami.</p>
+                </div>
+            </div>
+        </section>
 
     </main>
 
-<script src="js/api.js"></script>
-<script src="js/books.js"></script>
+    <!-- FOOTER -->
+    <footer class="bg-mizan-navy text-white mt-16 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Brand -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-mizan-gold/20 flex items-center justify-center text-mizan-gold border border-mizan-gold/40">
+                        <i data-lucide="scale" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold tracking-wider text-white">PROJECT MIZAN</h3>
+                        <p class="text-[10px] uppercase tracking-widest text-mizan-gold">Mesin Pencari Hadis</p>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Quick Links -->
+            <div class="space-y-3">
+                <h4 class="text-sm font-semibold text-mizan-gold">Tautan Cepat</h4>
+                <ul class="space-y-2 text-xs text-slate-300">
+                    <li><a href="#" class="hover:text-white transition flex items-center gap-2"><i data-lucide="home" class="w-3.5 h-3.5"></i> Beranda</a></li>
+                    <li><a href="#" class="hover:text-white transition flex items-center gap-2"><i data-lucide="search" class="w-3.5 h-3.5"></i> Pencarian</a></li>
+                    <li><a href="#" class="hover:text-white transition flex items-center gap-2"><i data-lucide="bookmark" class="w-3.5 h-3.5"></i> Bookmark</a></li>
+                    <li><a href="#" class="hover:text-white transition flex items-center gap-2"><i data-lucide="info" class="w-3.5 h-3.5"></i> Tentang Project Mizan</a></li>
+                </ul>
+            </div>
+
+            <!-- About -->
+            <div class="space-y-3">
+                <h4 class="text-sm font-semibold text-mizan-gold">Tentang Project Mizan</h4>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    Project Mizan adalah perpustakaan digital hadis yang bertujuan memudahkan umat Islam dalam mencari, membaca, memahami, dan mengamalkan hadis Nabi ﷺ.
+                </p>
+                <div class="flex items-center gap-4 text-xs text-slate-400 pt-2">
+                    <span class="flex items-center gap-1"><i data-lucide="shield-check" class="w-3.5 h-3.5 text-mizan-gold"></i> Gratis</span>
+                    <span class="flex items-center gap-1"><i data-lucide="globe" class="w-3.5 h-3.5 text-mizan-gold"></i> Terbuka</span>
+                    <span class="flex items-center gap-1"><i data-lucide="heart" class="w-3.5 h-3.5 text-mizan-gold"></i> Bermanfaat</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-slate-800 py-4 text-center text-xs text-slate-400">
+            <p>© 2024 Project Mizan. All rights reserved. Designed & Developed by <span class="text-slate-200 font-semibold">Deny D</span> <span class="italic">--sendaljepitmushola--</span></p>
+        </div>
+    </footer>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
