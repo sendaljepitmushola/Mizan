@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pencarian Hadis - Project Mizan</title>
+    <title>Hasil Pencarian Hadis - Project Mizan</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,148 +44,153 @@
     <!-- HEADER / NAVBAR -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <nav class="flex items-center space-x-8 text-sm font-medium">
-                <a href="index.html" class="flex items-center gap-2 text-mizan-textMuted hover:text-mizan-navy transition">
+            <a href="index.html" class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-mizan-navy flex items-center justify-center text-mizan-gold shadow-md">
+                    <i data-lucide="scale" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-wider text-mizan-navy">PROJECT MIZAN</h1>
+                    <p class="text-[10px] uppercase tracking-widest text-mizan-gold font-semibold">Mesin Pencari Hadis</p>
+                </div>
+            </a>
+
+            <nav class="flex items-center space-x-6 text-sm font-medium">
+                <a href="index.html" class="text-mizan-textMuted hover:text-mizan-navy transition flex items-center gap-1">
                     <i data-lucide="home" class="w-4 h-4"></i> Beranda
                 </a>
-                <a href="search.html" class="flex items-center gap-2 text-mizan-navy font-semibold border-b-2 border-mizan-navy pb-1">
+                <a href="search.html" class="text-mizan-navy font-semibold border-b-2 border-mizan-navy pb-1 flex items-center gap-1">
                     <i data-lucide="search" class="w-4 h-4"></i> Pencarian
-                </a>
-                <a href="#" class="flex items-center gap-2 text-mizan-textMuted hover:text-mizan-navy transition">
-                    <i data-lucide="bookmark" class="w-4 h-4"></i> Bookmark
-                </a>
-                <a href="#" class="flex items-center gap-2 text-mizan-textMuted hover:text-mizan-navy transition">
-                    <i data-lucide="info" class="w-4 h-4"></i> Tentang
                 </a>
             </nav>
         </div>
     </header>
 
     <!-- MAIN CONTENT -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-8">
-
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-1">
+        
         <!-- SEARCH BAR HEADER -->
-        <section class="max-w-4xl mx-auto space-y-4">
-            <div class="bg-white p-3 sm:p-4 rounded-2xl shadow-lg border border-slate-100 flex flex-col md:flex-row items-center gap-3">
-                <div class="flex items-center gap-3 flex-1 px-4 w-full">
-                    <i data-lucide="search" class="w-6 h-6 text-mizan-textMuted"></i>
-                    <input type="text" placeholder="Cari kata kunci hadis (misal: niat, shalat, sabar)..." value="niat" class="w-full text-base focus:outline-none text-mizan-textDark placeholder-slate-400 bg-transparent py-2">
+        <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm mb-8">
+            <form action="search.html" method="GET" class="flex flex-col md:flex-row items-center gap-3">
+                <div class="flex items-center gap-3 flex-1 px-3 w-full bg-slate-50 rounded-xl border border-slate-200">
+                    <i data-lucide="search" class="w-5 h-5 text-mizan-textMuted"></i>
+                    <input type="text" id="searchInput" name="q" placeholder="Cari kata kunci, tema, atau perawi..." class="w-full text-sm bg-transparent py-3 focus:outline-none text-mizan-textDark">
                 </div>
-                <button class="w-full md:w-auto bg-mizan-navy hover:bg-slate-800 text-white font-semibold px-8 py-3.5 rounded-xl transition flex items-center justify-center gap-2 shadow-md">
+
+                <select id="bookFilter" name="book" class="w-full md:w-48 bg-slate-50 border border-slate-200 rounded-xl px-3 py-3 text-sm text-mizan-textDark focus:outline-none">
+                    <option value="">Semua Kitab</option>
+                    <option value="bukhari">Sahih Bukhari</option>
+                    <option value="muslim">Sahih Muslim</option>
+                    <option value="abudawud">Sunan Abu Dawud</option>
+                    <option value="tirmidzi">Jami' at-Tirmidzi</option>
+                    <option value="nasai">Sunan an-Nasa'i</option>
+                    <option value="ibnumajah">Sunan Ibnu Majah</option>
+                </select>
+
+                <button type="submit" class="w-full md:w-auto bg-mizan-navy hover:bg-slate-800 text-white font-medium px-6 py-3 rounded-xl transition flex items-center justify-center gap-2">
                     Cari Hadis
                 </button>
+            </form>
+        </div>
+
+        <!-- SEARCH INFO -->
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-lg font-bold text-mizan-navy flex items-center gap-2">
+                Hasil Pencarian <span id="queryLabel" class="text-mizan-gold font-normal"></span>
+            </h2>
+            <span id="resultCount" class="text-xs bg-slate-200 text-slate-700 font-semibold px-3 py-1 rounded-full">0 Hadis</span>
+        </div>
+
+        <!-- HADITH CONTAINER (Dynamic via JS) -->
+        <div id="hadithContainer" class="space-y-6">
+            <!-- Loader State -->
+            <div class="text-center py-12 text-mizan-textMuted">
+                <i data-lucide="loader" class="w-8 h-8 animate-spin mx-auto text-mizan-gold mb-2"></i>
+                <p class="text-sm">Memuat data hadis...</p>
             </div>
-
-            <!-- FILTER CHIPS -->
-            <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none text-xs">
-                <span class="text-mizan-textMuted font-medium shrink-0">Filter Kitab:</span>
-                <button class="bg-mizan-navy text-white px-3.5 py-1.5 rounded-full font-medium shrink-0">Semua Kitab</button>
-                <button class="bg-white border border-slate-200 text-mizan-textMuted hover:text-mizan-navy px-3.5 py-1.5 rounded-full font-medium shrink-0">Sahih Bukhari</button>
-                <button class="bg-white border border-slate-200 text-mizan-textMuted hover:text-mizan-navy px-3.5 py-1.5 rounded-full font-medium shrink-0">Sahih Muslim</button>
-                <button class="bg-white border border-slate-200 text-mizan-textMuted hover:text-mizan-navy px-3.5 py-1.5 rounded-full font-medium shrink-0">Sunan Abu Dawud</button>
-                <button class="bg-white border border-slate-200 text-mizan-textMuted hover:text-mizan-navy px-3.5 py-1.5 rounded-full font-medium shrink-0">Jami' at-Tirmidzi</button>
-            </div>
-        </section>
-
-        <!-- HASIL PENCARIAN -->
-        <section class="max-w-4xl mx-auto space-y-6">
-            <div class="flex items-center justify-between text-xs text-mizan-textMuted">
-                <p>Menampilkan hasil pencarian untuk "<span class="font-bold text-mizan-navy">niat</span>"</p>
-                <p>Ditemukan: <span class="font-bold text-mizan-navy">12 Hadis</span></p>
-            </div>
-
-            <!-- HADIS CARD 1 -->
-            <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 space-y-6">
-                <!-- Card Header -->
-                <div class="flex items-center justify-between border-b border-slate-100 pb-4">
-                    <div class="flex items-center gap-3">
-                        <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">Sahih Bukhari</span>
-                        <span class="text-xs text-mizan-textMuted font-medium">Hadis No. 1</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <button title="Simpan Bookmark" class="p-2 text-mizan-textMuted hover:text-mizan-navy transition">
-                            <i data-lucide="bookmark" class="w-5 h-5"></i>
-                        </button>
-                        <button title="Bagikan" class="p-2 text-mizan-textMuted hover:text-mizan-navy transition">
-                            <i data-lucide="share-2" class="w-5 h-5"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Teks Arab -->
-                <div class="text-right" dir="rtl">
-                    <p class="font-arabic text-2xl leading-loose text-mizan-navy">
-                        إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى، فَمَنْ كَانَتْ هِجْرَتُهُ إِلَى دُنْيَا يُصِيبُهَا، أَوْ إِلَى امْرَأَةٍ يَنْكِحُهَا، فَهِجْرَتُهُ إِلَى مَا هَاجَرَ إِلَيْهِ.
-                    </p>
-                </div>
-
-                <!-- Terjemahan Indonesia -->
-                <div class="space-y-2">
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-mizan-gold">Terjemahan:</h4>
-                    <p class="text-sm text-slate-700 leading-relaxed">
-                        "Sesungguhnya setiap amalan tergantung pada niatnya, dan setiap orang akan mendapatkan sesuai dengan apa yang ia niatkan. Barangsiapa yang hijrahnya karena dunia yang ingin didapatkannya atau karena wanita yang ingin dinikahinya, maka hijrahnya adalah kepada apa yang ia hijrahkan."
-                    </p>
-                </div>
-
-                <!-- Card Footer / Perawi -->
-                <div class="pt-2 flex items-center justify-between text-xs text-mizan-textMuted border-t border-slate-50">
-                    <span>Perawi: <strong class="text-mizan-navy">Umar bin Al-Khattab r.a.</strong></span>
-                    <a href="#" class="text-mizan-navy hover:text-mizan-gold font-semibold flex items-center gap-1">
-                        Detail Hadis <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                    </a>
-                </div>
-            </article>
-
-            <!-- HADIS CARD 2 -->
-            <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 space-y-6">
-                <!-- Card Header -->
-                <div class="flex items-center justify-between border-b border-slate-100 pb-4">
-                    <div class="flex items-center gap-3">
-                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full">Sahih Muslim</span>
-                        <span class="text-xs text-mizan-textMuted font-medium">Hadis No. 1907</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <button title="Simpan Bookmark" class="p-2 text-mizan-textMuted hover:text-mizan-navy transition">
-                            <i data-lucide="bookmark" class="w-5 h-5"></i>
-                        </button>
-                        <button title="Bagikan" class="p-2 text-mizan-textMuted hover:text-mizan-navy transition">
-                            <i data-lucide="share-2" class="w-5 h-5"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Teks Arab -->
-                <div class="text-right" dir="rtl">
-                    <p class="font-arabic text-2xl leading-loose text-mizan-navy">
-                        إِنَّ اللهَ لاَ يَنْظُرُ إِلَى صُوَرِكُمْ وَأَمْوَالِكُمْ وَلَكِنْ يَنْظُرُ إِلَى قُلُوبِكُمْ وَأَعْمَالِكُمْ.
-                    </p>
-                </div>
-
-                <!-- Terjemahan Indonesia -->
-                <div class="space-y-2">
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-mizan-gold">Terjemahan:</h4>
-                    <p class="text-sm text-slate-700 leading-relaxed">
-                        "Sesungguhnya Allah tidak melihat kepada rupa kalian dan harta kalian, tetapi Dia melihat kepada hati kalian dan amalan kalian."
-                    </p>
-                </div>
-
-                <!-- Card Footer / Perawi -->
-                <div class="pt-2 flex items-center justify-between text-xs text-mizan-textMuted border-t border-slate-50">
-                    <span>Perawi: <strong class="text-mizan-navy">Abu Hurairah r.a.</strong></span>
-                    <a href="#" class="text-mizan-navy hover:text-mizan-gold font-semibold flex items-center gap-1">
-                        Detail Hadis <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                    </a>
-                </div>
-            </article>
-
-        </section>
+        </div>
 
     </main>
 
     <!-- FOOTER -->
-<footer class="bg-mizan-navy text-white mt-16 border-t border-slate-800 py-6 text-center text-xs text-slate-400">
-    <p>© <script>document.write(new Date().getFullYear())</script> Project Mizan. All rights reserved. Designed & Developed by <span class="text-slate-200 font-semibold">Deny D</span> <span class="italic">--sendaljepitmushola--</span></p>
-</footer>
+    <footer class="bg-mizan-navy text-white mt-16 border-t border-slate-800 py-6 text-center text-xs text-slate-400">
+        <p>© <script>document.write(new Date().getFullYear())</script> Project Mizan. All rights reserved. Designed & Developed by <span class="text-slate-200 font-semibold">Deny D</span> <span class="italic">--sendaljepitmushola--</span></p>
+    </footer>
+
+    <!-- SCRIPT FETCH DATA FROM BACKEND API -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('q') || '';
+            const book = urlParams.get('book') || '';
+
+            // Set Form Values from URL
+            if (query) document.getElementById('searchInput').value = query;
+            if (book) document.getElementById('bookFilter').value = book;
+
+            // Render Query Label
+            const queryLabel = document.getElementById('queryLabel');
+            if (query) queryLabel.textContent = `untuk "${query}"`;
+
+            // Fetch from API Server
+            const apiUrl = `/api/search?q=${encodeURIComponent(query)}&book=${encodeURIComponent(book)}`;
+
+            fetch(apiUrl)
+                .then(res => res.json())
+                .then(data => {
+                    const container = document.getElementById('hadithContainer');
+                    const countBadge = document.getElementById('resultCount');
+                    countBadge.textContent = `${data.total} Hadis`;
+
+                    if (!data.results || data.results.length === 0) {
+                        container.innerHTML = `
+                            <div class="bg-white p-8 rounded-2xl border border-slate-100 text-center space-y-3">
+                                <i data-lucide="search-x" class="w-12 h-12 text-slate-300 mx-auto"></i>
+                                <h3 class="text-base font-bold text-mizan-navy">Hadis Tidak Ditemukan</h3>
+                                <p class="text-xs text-mizan-textMuted">Coba gunakan kata kunci lain atau pilih kitab yang berbeda.</p>
+                            </div>
+                        `;
+                        lucide.createIcons();
+                        return;
+                    }
+
+                    container.innerHTML = data.results.map(item => `
+                        <article class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-100 shadow-sm space-y-6 hover:shadow-md transition">
+                            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="bg-mizan-navy text-white text-xs font-bold px-3 py-1 rounded-lg">${item.book_name}</span>
+                                    <span class="bg-amber-100 text-amber-800 text-xs font-semibold px-2.5 py-1 rounded-lg">No. ${item.number}</span>
+                                </div>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">${item.grade}</span>
+                            </div>
+
+                            <div class="text-right py-2">
+                                <p class="font-arabic text-2xl sm:text-3xl leading-loose text-slate-800 font-bold">${item.arabic}</p>
+                            </div>
+
+                            <div class="space-y-2">
+                                <p class="text-xs font-bold text-mizan-navy">Terjemahan:</p>
+                                <p class="text-sm text-slate-600 leading-relaxed">"${item.translation}"</p>
+                            </div>
+
+                            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-mizan-textMuted">
+                                <span><strong class="text-mizan-navy">Perawi:</strong> ${item.narrator}</span>
+                                <button class="hover:text-mizan-navy flex items-center gap-1"><i data-lucide="bookmark" class="w-4 h-4"></i> Simpan</button>
+                            </div>
+                        </article>
+                    `).join('');
+
+                    lucide.createIcons();
+                })
+                .catch(err => {
+                    console.error("Gagal memuat data API:", err);
+                    document.getElementById('hadithContainer').innerHTML = `
+                        <div class="bg-red-50 p-6 rounded-2xl border border-red-200 text-center text-red-700 text-sm">
+                            Gagal terhubung ke API server. Pastikan server Node.js sudah berjalan.
+                        </div>
+                    `;
+                });
+        });
+    </script>
 
     <!-- Initialize Lucide Icons -->
     <script>
