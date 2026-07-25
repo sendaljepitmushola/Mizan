@@ -51,9 +51,10 @@
       background-repeat: no-repeat;
       background-color: #FFFFFF;
       border-radius: 32px;
-      padding: 28px 48px 130px 48px;
+      /* Padding bawah dikurangi dari 130px ke 80px biar gak kepanjangan */
+      padding: 28px 48px 80px 48px;
       box-shadow: 0 15px 40px rgba(15, 40, 75, 0.04);
-      min-height: 480px;
+      min-height: 420px;
       overflow: hidden;
     }
 
@@ -124,9 +125,8 @@
       text-align: center;
     }
 
-    /* LOGO GAMBAR */
     .brand-logo-img {
-      width: 180px; /* Atur ukuran di sini */
+      width: 180px;
       height: auto;
       margin-bottom: 8px;
       display: block;
@@ -200,20 +200,23 @@
       font-weight: 500;
     }
 
-    /* FLOATING SEARCH BAR */
+    /* ==========================================
+       FLOATING SEARCH BAR (FIXED POSITION)
+       ========================================== */
     .search-wrapper {
       position: relative;
       z-index: 30;
-      max-width: 780px;
-      margin: -45px auto 0 auto;
+      max-width: 740px; /* Bikin ukurannya pas kaya mockup */
+      /* Naikkan posisi ke atas mepet dengan tumpukan buku/pot bunga */
+      margin: -75px auto 0 auto; 
     }
 
     .search-card {
       background: #FFFFFF;
-      border-radius: 22px;
-      padding: 16px 20px;
-      box-shadow: 0 15px 35px rgba(15, 40, 75, 0.08);
-      border: 1px solid #F1F5F9;
+      border-radius: 24px;
+      padding: 18px 24px;
+      box-shadow: 0 20px 45px rgba(15, 40, 75, 0.1);
+      border: 1px solid rgba(226, 232, 240, 0.8);
     }
 
     .search-input-box {
@@ -221,8 +224,8 @@
       align-items: center;
       background: #FFFFFF;
       border: 1.5px solid #E2E8F0;
-      border-radius: 14px;
-      padding: 5px 5px 5px 16px;
+      border-radius: 16px;
+      padding: 6px 6px 6px 18px;
     }
 
     .search-input-box:focus-within {
@@ -248,8 +251,8 @@
       background-color: var(--navy-primary);
       color: #FFFFFF;
       border: none;
-      padding: 12px 26px;
-      border-radius: 10px;
+      padding: 12px 28px;
+      border-radius: 12px;
       font-weight: 700;
       font-size: 0.9rem;
       cursor: pointer;
@@ -259,7 +262,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-top: 12px;
+      margin-top: 14px;
       flex-wrap: wrap;
     }
 
@@ -327,7 +330,6 @@
         
         <!-- BRANDING (KIRI) -->
         <div class="brand-section">
-          <!-- LOGO GAMBAR (LANGSUNG PANGGIL NAMA FILE DENGAN PATH RELATIF LOKAL) -->
           <img src="logo-mizan.png?v=2" alt="Logo Mizan" class="brand-logo-img">
 
           <span class="brand-tag">PROJECT</span>
