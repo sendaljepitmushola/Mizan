@@ -1,485 +1,368 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Mizan - Mesin Pencari Hadis Digital</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Mizan - Mesin Pencari Hadis</title>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        mizan: {
-                            navy: '#0A1E3F',
-                            navyDark: '#07152E',
-                            gold: '#C59B27',
-                            goldHover: '#A6801A',
-                            bg: '#F0F3F8',
-                            cardBg: '#FFFFFF',
-                            textDark: '#1E293B',
-                            textMuted: '#64748B'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
-                        serif: ['Cinzel', 'serif'],
-                        arabic: ['Noto Naskh Arabic', 'serif']
-                    }
-                }
-            }
-        }
-    </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    :root {
+      --navy-deep: #0A192F;
+      --navy-primary: #0F284B;
+      --gold-accent: #C5932B;
+      --bg-slate: #F4F6F9;
+      --text-dark: #1E293B;
+      --text-gray: #64748B;
+    }
 
-    <style>
-        body {
-            background-color: #F0F3F8;
-        }
-        
-        /* Arch / Kubah Shape CSS */
-        .arch-container {
-            border-top-left-radius: 140px;
-            border-top-right-radius: 140px;
-        }
-        
-        /* Custom Shadow & Smooth Borders */
-        .mizan-card-shadow {
-            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
-        }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-slate);
+      color: var(--text-dark);
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      -webkit-font-smoothing: antialiased;
+    }
 
-        /* Detail Sampul Buku Realistis */
-        .kitab-cover-real {
-            position: relative;
-            box-shadow: 4px 6px 14px rgba(0, 0, 0, 0.35), inset -4px 0 8px rgba(0, 0, 0, 0.3);
-            border-left: 5px solid rgba(255, 255, 255, 0.25);
-        }
+    .wrapper {
+      width: 100%;
+      max-width: 1240px;
+    }
 
-        /* Bingkai Ornamen Emas Melingkar Tepat Presisi */
-        .gold-ornament-border {
-            border: 2px solid #D4AF37;
-            box-shadow: inset 0 0 0 2px rgba(0,0,0,0.2), 0 0 0 1px #8B6508;
-        }
-    </style>
+    /* ==========================================
+       HERO CONTAINER (KARTU UTAMA)
+       ========================================== */
+    .hero-container {
+      position: relative;
+      background-color: #FFFFFF;
+      border-radius: 32px;
+      padding: 32px 50px 150px 50px;
+      box-shadow: 0 15px 40px rgba(15, 40, 75, 0.05);
+      overflow: hidden;
+      min-height: 480px;
+    }
+
+    /* BINGKAI LENGKUNGAN KIRI (PURE CSS) */
+    .arch-bg-left {
+      position: absolute;
+      top: -20px;
+      left: -40px;
+      width: 440px;
+      height: 120%;
+      border: 1.5px solid #E2E8F0;
+      border-top-right-radius: 240px;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.6;
+    }
+
+    /* ILUSTRASI MASJID DI KANAN */
+    .hero-illustration-right {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 520px;
+      height: 100%;
+      background-image: url('kanan.png'); /* File gambar yang tadi */
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: right top;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 25px;
+    }
+
+    .nav-list {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-item a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--text-gray);
+      font-size: 0.92rem;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .nav-item a:hover, .nav-item.active a {
+      color: var(--navy-primary);
+    }
+
+    .nav-item.active a {
+      position: relative;
+    }
+
+    .nav-item.active a::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: var(--gold-accent);
+      border-radius: 2px;
+    }
+
+    /* HERO CONTENT */
+    .hero-content {
+      position: relative;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* BRANDING (KIRI) */
+    .brand-section {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-tag {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--gold-accent);
+      letter-spacing: 3px;
+    }
+
+    .brand-title {
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: var(--navy-primary);
+      letter-spacing: 1px;
+      line-height: 1;
+      margin: 2px 0;
+    }
+
+    .brand-sub {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--gold-accent);
+      letter-spacing: 1.5px;
+    }
+
+    .brand-meta {
+      margin-top: 24px;
+      font-size: 0.78rem;
+      color: var(--text-gray);
+      line-height: 1.4;
+    }
+
+    .brand-meta strong {
+      color: var(--navy-primary);
+    }
+
+    /* HEADLINE (TENGAH) */
+    .headline-section {
+      padding-left: 10px;
+    }
+
+    .headline-main {
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: var(--navy-primary);
+      line-height: 1.25;
+      letter-spacing: -0.5px;
+    }
+
+    .headline-main span.gold-text {
+      color: var(--gold-accent);
+    }
+
+    .headline-sub {
+      margin-top: 10px;
+      font-size: 1rem;
+      color: var(--text-gray);
+      font-weight: 500;
+    }
+
+    /* ==========================================
+       SEARCH BAR (MENIMPA DI ATAS HERO)
+       ========================================== */
+    .search-wrapper {
+      position: relative;
+      z-index: 20;
+      max-width: 800px;
+      margin: -65px auto 0 auto;
+    }
+
+    .search-card {
+      background: #FFFFFF;
+      border-radius: 24px;
+      padding: 16px 20px;
+      box-shadow: 0 15px 35px rgba(15, 40, 75, 0.08);
+      border: 1px solid #F1F5F9;
+    }
+
+    .search-input-box {
+      display: flex;
+      align-items: center;
+      background: #FFFFFF;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 6px 6px 6px 18px;
+    }
+
+    .search-input-box:focus-within {
+      border-color: var(--navy-primary);
+    }
+
+    .search-icon {
+      margin-right: 12px;
+      color: #94A3B8;
+      flex-shrink: 0;
+    }
+
+    .search-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 0.98rem;
+      font-family: inherit;
+      color: var(--text-dark);
+    }
+
+    .btn-search {
+      background-color: var(--navy-primary);
+      color: #FFFFFF;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+    }
+
+    .btn-search:hover {
+      background-color: var(--navy-deep);
+    }
+
+    .tags-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .tags-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-gray);
+      margin-right: 4px;
+    }
+
+    .tag-item {
+      background: #F1F5F9;
+      color: #475569;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .tag-item:hover {
+      background: #E2E8F0;
+      color: var(--navy-primary);
+    }
+  </style>
 </head>
-<body class="font-sans text-mizan-textDark antialiased min-h-screen py-6 px-4 sm:px-6 lg:px-8 flex flex-col justify-between max-w-[1440px] mx-auto">
+<body>
 
-    <!-- MAIN WRAPPER CONTAINER -->
-    <div class="space-y-6">
+  <div class="wrapper">
 
-        <!-- HERO & HEADER CONTAINER WITH ARCH BACKGROUND -->
-        <div class="bg-white rounded-[32px] p-6 sm:p-10 mizan-card-shadow relative overflow-hidden border border-slate-100">
-            
-            <!-- TOP NAVBAR INLINE -->
-            <header class="flex justify-end items-center mb-6 relative z-10">
-                <nav class="flex items-center space-x-8 text-sm font-semibold">
-                    <a href="index.html" class="text-mizan-navy border-b-2 border-mizan-gold pb-1 flex items-center gap-2">
-                        <i data-lucide="home" class="w-4 h-4"></i> Beranda
-                    </a>
-                    <a href="search.html" class="text-slate-500 hover:text-mizan-navy transition flex items-center gap-2">
-                        <i data-lucide="search" class="w-4 h-4"></i> Pencarian
-                    </a>
-                    <a href="#" class="text-slate-500 hover:text-mizan-navy transition flex items-center gap-2">
-                        <i data-lucide="bookmark" class="w-4 h-4"></i> Bookmark
-                    </a>
-                    <a href="#" class="text-slate-500 hover:text-mizan-navy transition flex items-center gap-2">
-                        <i data-lucide="info" class="w-4 h-4"></i> Tentang
-                    </a>
-                </nav>
-            </header>
+    <header class="hero-container">
+      
+      <!-- Frame Lengkungan Kiri -->
+      <div class="arch-bg-left"></div>
 
-            <!-- HERO CONTENT GRID -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-2 pb-12">
-                
-                <!-- KIRI: BRANDING LOGO & TAGLINE -->
-                <div class="lg:col-span-6 space-y-6 text-center lg:text-left relative z-10">
-                    <div class="inline-flex flex-col items-center lg:items-start">
-                        <!-- LOGO TIMBANGAN & AL-QURAN -->
-                        <div class="flex items-center gap-3 mb-2">
-                            <div class="w-16 h-16 rounded-2xl bg-mizan-navy flex items-center justify-center text-mizan-gold shadow-md">
-                                <i data-lucide="scale" class="w-10 h-10"></i>
-                            </div>
-                            <div class="text-left">
-                                <h1 class="text-xl font-serif font-extrabold tracking-widest text-mizan-navy">PROJECT</h1>
-                                <h1 class="text-3xl font-serif font-black tracking-wider text-mizan-navy -mt-1">MIZAN</h1>
-                                <p class="text-[10px] uppercase tracking-widest text-mizan-gold font-bold">MESIN PENCARI HADIS</p>
-                            </div>
-                        </div>
-                        <p class="text-xs text-slate-500 italic mt-1">Designed & Developed by <span class="font-semibold text-mizan-navy">Deny D</span> <span class="not-italic text-[10px] text-slate-400">--sendaljepitmushola--</span></p>
-                    </div>
+      <!-- Ilustrasi Kanan (Gambar Asli Hasil Cleanup Kamu) -->
+      <div class="hero-illustration-right"></div>
 
-                    <div class="pt-2">
-                        <h2 class="text-3xl sm:text-4xl font-extrabold text-mizan-navy leading-tight">
-                            Temukan Hadis.<br>
-                            Pahami. <span class="text-mizan-gold">Amalkan.</span>
-                        </h2>
-                        <p class="mt-2 text-sm text-slate-500 font-medium">Sumber autentik. Referensi terpercaya.</p>
-                    </div>
-                </div>
+      <!-- NAVBAR -->
+      <nav class="navbar">
+        <ul class="nav-list">
+          <li class="nav-item active"><a href="#">Beranda</a></li>
+          <li class="nav-item"><a href="#">Pencarian</a></li>
+          <li class="nav-item"><a href="#">Bookmark</a></li>
+          <li class="nav-item"><a href="#">Tentang</a></li>
+        </ul>
+      </nav>
 
-                <!-- KANAN: ARCH MUSHOLA / MASJID ILLUSTRATION -->
-                <div class="lg:col-span-6 flex justify-center lg:justify-end relative">
-                    <!-- Lampu Gantung Emas -->
-                    <div class="absolute top-0 right-12 text-mizan-gold z-20 hidden sm:block">
-                        <i data-lucide="lamp" class="w-8 h-8"></i>
-                    </div>
+      <!-- CONTENT -->
+      <div class="hero-content">
+        <div class="brand-section">
+          <span class="brand-tag">PROJECT</span>
+          <h1 class="brand-title">MIZAN</h1>
+          <span class="brand-sub">MESIN PENCARI HADIS</span>
 
-                    <!-- Arch Frame / Kubah -->
-                    <div class="relative w-full max-w-sm h-72 bg-gradient-to-b from-slate-50 to-amber-50/50 arch-container border-4 border-slate-100 shadow-inner flex items-end justify-center overflow-hidden">
-                        <div class="text-center p-6 mb-4 relative z-10">
-                            <i data-lucide="building-2" class="w-20 h-20 text-slate-300 mx-auto mb-2 opacity-60"></i>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- SEARCH BAR CARD (FLOATING OVERLAP) -->
-            <div class="max-w-3xl mx-auto -mb-16 relative z-30">
-                <div class="bg-white p-3 rounded-3xl border border-slate-200/80 shadow-2xl space-y-3">
-                    <form action="search.html" method="GET" class="flex items-center gap-3 px-3 py-1">
-                        <i data-lucide="search" class="w-6 h-6 text-slate-400 shrink-0"></i>
-                        <input type="text" name="q" placeholder="Cari hadis, perawi, tema, atau kata kunci..." class="w-full text-sm bg-transparent focus:outline-none text-mizan-textDark placeholder-slate-400 font-medium">
-                        <button type="submit" class="bg-mizan-navy hover:bg-slate-800 text-white px-7 py-3 rounded-2xl font-bold text-xs transition shrink-0 shadow-md flex items-center gap-2">
-                            <span>Cari Hadis</span>
-                        </button>
-                    </form>
-                    
-                    <!-- CHIPS TAGS CONTOH PENCARIAN -->
-                    <div class="flex flex-wrap items-center justify-center gap-1.5 pt-1 pb-1 text-xs text-slate-500 border-t border-slate-100">
-                        <span class="font-medium text-[11px] text-slate-400 mr-1">Contoh pencarian:</span>
-                        <a href="search.html?q=niat" class="bg-slate-100 hover:bg-amber-100 text-slate-600 px-3 py-0.5 rounded-full text-[11px] font-medium transition">niat</a>
-                        <a href="search.html?q=iman" class="bg-slate-100 hover:bg-amber-100 text-slate-600 px-3 py-0.5 rounded-full text-[11px] font-medium transition">iman</a>
-                        <a href="search.html?q=shalat" class="bg-slate-100 hover:bg-amber-100 text-slate-600 px-3 py-0.5 rounded-full text-[11px] font-medium transition">shalat</a>
-                        <a href="search.html?q=puasa" class="bg-slate-100 hover:bg-amber-100 text-slate-600 px-3 py-0.5 rounded-full text-[11px] font-medium transition">puasa</a>
-                        <a href="search.html?q=zakat" class="bg-slate-100 hover:bg-amber-100 text-slate-600 px-3 py-0.5 rounded-full text-[11px] font-medium transition">zakat</a>
-                        <a href="search.html?q=jihad" class="bg-slate-100 hover:bg-amber-100 text-slate-600 px-3 py-0.5 rounded-full text-[11px] font-medium transition">jihad</a>
-                        <a href="search.html?q=akhlak" class="bg-slate-100 hover:bg-amber-100 text-slate-600 px-3 py-0.5 rounded-full text-[11px] font-medium transition">akhlak</a>
-                    </div>
-                </div>
-            </div>
-
+          <p class="brand-meta">
+            Designed & Developed by <strong>Deny D</strong><br>
+            <span style="color: #94A3B8;">--sendaljepitmushola--</span>
+          </p>
         </div>
 
-        <!-- STATISTIK RINGKASAN BAR (SINGLE WHITE CONTAINER) -->
-        <div class="pt-10">
-            <div class="bg-white rounded-3xl p-5 border border-slate-200/70 shadow-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 divide-y sm:divide-y-0 sm:divide-x divide-slate-100">
-                
-                <div class="flex items-center gap-4 px-3 pt-2 sm:pt-0">
-                    <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-                        <i data-lucide="book-open" class="w-6 h-6"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-black text-mizan-navy">6</h3>
-                        <p class="text-xs font-bold text-slate-800">Kitab Hadis</p>
-                        <p class="text-[11px] text-slate-400">Koleksi tersedia</p>
-                    </div>
-                </div>
+        <div class="headline-section">
+          <h2 class="headline-main">
+            Temukan Hadis.<br>
+            Pahami. <span class="gold-text">Amalkan.</span>
+          </h2>
+          <p class="headline-sub">Sumber autentik. Referensi terpercaya.</p>
+        </div>
+      </div>
 
-                <div class="flex items-center gap-4 px-3 pt-4 sm:pt-0">
-                    <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-                        <i data-lucide="file-text" class="w-6 h-6"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-black text-mizan-navy">~ 60.000+</h3>
-                        <p class="text-xs font-bold text-slate-800">Total Hadis</p>
-                        <p class="text-[11px] text-slate-400">Tersedia dalam database</p>
-                    </div>
-                </div>
+    </header>
 
-                <div class="flex items-center gap-4 px-3 pt-4 sm:pt-0">
-                    <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
-                        <i data-lucide="users" class="w-6 h-6"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-black text-mizan-navy">1.000+</h3>
-                        <p class="text-xs font-bold text-slate-800">Perawi</p>
-                        <p class="text-[11px] text-slate-400">Data perawi hadis</p>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-4 px-3 pt-4 sm:pt-0">
-                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
-                        <i data-lucide="shield-check" class="w-6 h-6"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-black text-mizan-navy">100%</h3>
-                        <p class="text-xs font-bold text-slate-800">Gratis & Terbuka</p>
-                        <p class="text-[11px] text-slate-400">Untuk semua umat</p>
-                    </div>
-                </div>
-
-            </div>
+    <!-- SEARCH BAR -->
+    <div class="search-wrapper">
+      <div class="search-card">
+        <div class="search-input-box">
+          <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" class="search-input" placeholder="Cari hadis, perawi, tema, atau kata kunci...">
+          <button class="btn-search">Cari Hadis</button>
         </div>
 
-        <!-- KOLEKSI KITAB HADIS SECTION (KUNCI 1 BARIS 6 KOLOM) -->
-        <div class="py-4 space-y-4">
-            <div class="flex justify-between items-center px-1">
-                <div>
-                    <h3 class="text-xl font-extrabold text-mizan-navy flex items-center gap-2">
-                        <i data-lucide="book-marked" class="w-5 h-5 text-mizan-gold"></i>
-                        Koleksi Kitab Hadis
-                    </h3>
-                    <p class="text-xs text-slate-500 mt-0.5">Jelajahi koleksi kitab hadis utama yang telah kami sediakan.</p>
-                </div>
-                <a href="search.html" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-2xl bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 text-xs font-bold transition shadow-sm">
-                    Lihat Semua Kitab <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                </a>
-            </div>
-
-            <!-- GRID 6 KOLOM SEJAJAR DI DESKTOP / LAPTOP -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-
-                <!-- 1. Sahih Bukhari (Hijau Tua) -->
-                <div class="bg-white p-3 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between h-full">
-                    <div class="flex items-center gap-2.5">
-                        <div class="kitab-cover-real w-14 h-28 bg-[#153e25] rounded-r p-1 shrink-0 flex items-center justify-center">
-                            <div class="gold-ornament-border w-full h-full p-1 flex flex-col items-center justify-center text-center text-[#F3E5AB]">
-                                <p class="font-arabic text-[7px] leading-none opacity-80 mb-0.5">الجامع الصحيح</p>
-                                <h5 class="font-arabic font-bold text-[10px] leading-tight text-[#FFD700]">صحيح<br>البخاري</h5>
-                            </div>
-                        </div>
-                        <div class="space-y-1 flex-1 min-w-0">
-                            <h4 class="text-xs font-extrabold text-mizan-navy leading-snug truncate">Sahih Bukhari</h4>
-                            <p class="text-[10px] text-emerald-600 font-semibold truncate">Imam Bukhari</p>
-                            <p class="text-[9px] text-slate-400 flex items-center gap-1 pt-0.5">
-                                <i data-lucide="book-open" class="w-2.5 h-2.5 shrink-0"></i> 7.277 Hadis
-                            </p>
-                            <p class="text-[9px] text-slate-500 leading-tight line-clamp-3 pt-0.5">Kitab hadis paling shahih setelah Al-Qur'an.</p>
-                        </div>
-                    </div>
-                    <a href="search.html?book=bukhari" class="mt-3 w-full bg-[#153e25] hover:bg-emerald-950 text-white text-[10px] font-bold py-2 rounded-xl transition flex items-center justify-center gap-1 shadow-sm">
-                        <span>Buka Kitab</span> <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                    </a>
-                </div>
-
-                <!-- 2. Sahih Muslim (Biru Navy) -->
-                <div class="bg-white p-3 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between h-full">
-                    <div class="flex items-center gap-2.5">
-                        <div class="kitab-cover-real w-14 h-28 bg-[#132a45] rounded-r p-1 shrink-0 flex items-center justify-center">
-                            <div class="gold-ornament-border w-full h-full p-1 flex flex-col items-center justify-center text-center text-[#F3E5AB]">
-                                <p class="font-arabic text-[7px] leading-none opacity-80 mb-0.5">المسند الصحيح</p>
-                                <h5 class="font-arabic font-bold text-[10px] leading-tight text-[#FFD700]">صحيح<br>مسلم</h5>
-                            </div>
-                        </div>
-                        <div class="space-y-1 flex-1 min-w-0">
-                            <h4 class="text-xs font-extrabold text-mizan-navy leading-snug truncate">Sahih Muslim</h4>
-                            <p class="text-[10px] text-blue-600 font-semibold truncate">Imam Muslim</p>
-                            <p class="text-[9px] text-slate-400 flex items-center gap-1 pt-0.5">
-                                <i data-lucide="book-open" class="w-2.5 h-2.5 shrink-0"></i> 7.459 Hadis
-                            </p>
-                            <p class="text-[9px] text-slate-500 leading-tight line-clamp-3 pt-0.5">Koleksi hadis shahih yang sangat penting.</p>
-                        </div>
-                    </div>
-                    <a href="search.html?book=muslim" class="mt-3 w-full bg-[#132a45] hover:bg-slate-950 text-white text-[10px] font-bold py-2 rounded-xl transition flex items-center justify-center gap-1 shadow-sm">
-                        <span>Buka Kitab</span> <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                    </a>
-                </div>
-
-                <!-- 3. Sunan Abu Dawud (Cokelat) -->
-                <div class="bg-white p-3 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between h-full">
-                    <div class="flex items-center gap-2.5">
-                        <div class="kitab-cover-real w-14 h-28 bg-[#613b16] rounded-r p-1 shrink-0 flex items-center justify-center">
-                            <div class="gold-ornament-border w-full h-full p-1 flex flex-col items-center justify-center text-center text-[#F3E5AB]">
-                                <p class="font-arabic text-[7px] leading-none opacity-80 mb-0.5">السنن</p>
-                                <h5 class="font-arabic font-bold text-[10px] leading-tight text-[#FFD700]">سنن<br>أبي داود</h5>
-                            </div>
-                        </div>
-                        <div class="space-y-1 flex-1 min-w-0">
-                            <h4 class="text-xs font-extrabold text-mizan-navy leading-snug truncate">Sunan Abu Dawud</h4>
-                            <p class="text-[10px] text-amber-700 font-semibold truncate">Imam Abu Dawud</p>
-                            <p class="text-[9px] text-slate-400 flex items-center gap-1 pt-0.5">
-                                <i data-lucide="book-open" class="w-2.5 h-2.5 shrink-0"></i> 4.800 Hadis
-                            </p>
-                            <p class="text-[9px] text-slate-500 leading-tight line-clamp-3 pt-0.5">Membahas hukum-hukum amal perbuatan.</p>
-                        </div>
-                    </div>
-                    <a href="search.html?book=abudawud" class="mt-3 w-full bg-[#a36d1f] hover:bg-amber-900 text-white text-[10px] font-bold py-2 rounded-xl transition flex items-center justify-center gap-1 shadow-sm">
-                        <span>Buka Kitab</span> <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                    </a>
-                </div>
-
-                <!-- 4. Jami' at-Tirmidzi (Ungu) -->
-                <div class="bg-white p-3 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between h-full">
-                    <div class="flex items-center gap-2.5">
-                        <div class="kitab-cover-real w-14 h-28 bg-[#3d1f52] rounded-r p-1 shrink-0 flex items-center justify-center">
-                            <div class="gold-ornament-border w-full h-full p-1 flex flex-col items-center justify-center text-center text-[#F3E5AB]">
-                                <p class="font-arabic text-[7px] leading-none opacity-80 mb-0.5">الجامع</p>
-                                <h5 class="font-arabic font-bold text-[10px] leading-tight text-[#FFD700]">جامع<br>الترمذي</h5>
-                            </div>
-                        </div>
-                        <div class="space-y-1 flex-1 min-w-0">
-                            <h4 class="text-xs font-extrabold text-mizan-navy leading-snug truncate">Jami' at-Tirmidzi</h4>
-                            <p class="text-[10px] text-purple-700 font-semibold truncate">Imam Tirmidzi</p>
-                            <p class="text-[9px] text-slate-400 flex items-center gap-1 pt-0.5">
-                                <i data-lucide="book-open" class="w-2.5 h-2.5 shrink-0"></i> 3.956 Hadis
-                            </p>
-                            <p class="text-[9px] text-slate-500 leading-tight line-clamp-3 pt-0.5">Hadis dengan berbagai pembahasan hukum.</p>
-                        </div>
-                    </div>
-                    <a href="search.html?book=tirmidzi" class="mt-3 w-full bg-[#481c66] hover:bg-purple-950 text-white text-[10px] font-bold py-2 rounded-xl transition flex items-center justify-center gap-1 shadow-sm">
-                        <span>Buka Kitab</span> <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                    </a>
-                </div>
-
-                <!-- 5. Sunan an-Nasa'i (Toska / Teal) -->
-                <div class="bg-white p-3 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between h-full">
-                    <div class="flex items-center gap-2.5">
-                        <div class="kitab-cover-real w-14 h-28 bg-[#0e4249] rounded-r p-1 shrink-0 flex items-center justify-center">
-                            <div class="gold-ornament-border w-full h-full p-1 flex flex-col items-center justify-center text-center text-[#F3E5AB]">
-                                <p class="font-arabic text-[7px] leading-none opacity-80 mb-0.5">السنن</p>
-                                <h5 class="font-arabic font-bold text-[10px] leading-tight text-[#FFD700]">سنن<br>النسائي</h5>
-                            </div>
-                        </div>
-                        <div class="space-y-1 flex-1 min-w-0">
-                            <h4 class="text-xs font-extrabold text-mizan-navy leading-snug truncate">Sunan an-Nasa'i</h4>
-                            <p class="text-[10px] text-teal-600 font-semibold truncate">Imam An-Nasa'i</p>
-                            <p class="text-[9px] text-slate-400 flex items-center gap-1 pt-0.5">
-                                <i data-lucide="book-open" class="w-2.5 h-2.5 shrink-0"></i> 5.762 Hadis
-                            </p>
-                            <p class="text-[9px] text-slate-500 leading-tight line-clamp-3 pt-0.5">Sunan yang membahas berbagai aspek Islam.</p>
-                        </div>
-                    </div>
-                    <a href="search.html?book=nasai" class="mt-3 w-full bg-[#0e4249] hover:bg-teal-950 text-white text-[10px] font-bold py-2 rounded-xl transition flex items-center justify-center gap-1 shadow-sm">
-                        <span>Buka Kitab</span> <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                    </a>
-                </div>
-
-                <!-- 6. Sunan Ibnu Majah (Merah Marun) -->
-                <div class="bg-white p-3 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between h-full">
-                    <div class="flex items-center gap-2.5">
-                        <div class="kitab-cover-real w-14 h-28 bg-[#521115] rounded-r p-1 shrink-0 flex items-center justify-center">
-                            <div class="gold-ornament-border w-full h-full p-1 flex flex-col items-center justify-center text-center text-[#F3E5AB]">
-                                <p class="font-arabic text-[7px] leading-none opacity-80 mb-0.5">السنن</p>
-                                <h5 class="font-arabic font-bold text-[10px] leading-tight text-[#FFD700]">سنن<br>ابن ماجه</h5>
-                            </div>
-                        </div>
-                        <div class="space-y-1 flex-1 min-w-0">
-                            <h4 class="text-xs font-extrabold text-mizan-navy leading-snug truncate">Sunan Ibnu Majah</h4>
-                            <p class="text-[10px] text-rose-700 font-semibold truncate">Imam Ibnu Majah</p>
-                            <p class="text-[9px] text-slate-400 flex items-center gap-1 pt-0.5">
-                                <i data-lucide="book-open" class="w-2.5 h-2.5 shrink-0"></i> 4.341 Hadis
-                            </p>
-                            <p class="text-[9px] text-slate-500 leading-tight line-clamp-3 pt-0.5">Hadis-hadis tentang hukum dan kehidupan.</p>
-                        </div>
-                    </div>
-                    <a href="search.html?book=ibnumajah" class="mt-3 w-full bg-[#7a1318] hover:bg-rose-950 text-white text-[10px] font-bold py-2 rounded-xl transition flex items-center justify-center gap-1 shadow-sm">
-                        <span>Buka Kitab</span> <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                    </a>
-                </div>
-
-            </div>
+        <div class="tags-container">
+          <span class="tags-label">Contoh pencarian:</span>
+          <a href="#" class="tag-item">niat</a>
+          <a href="#" class="tag-item">iman</a>
+          <a href="#" class="tag-item">shalat</a>
+          <a href="#" class="tag-item">puasa</a>
+          <a href="#" class="tag-item">zakat</a>
+          <a href="#" class="tag-item">jihad</a>
+          <a href="#" class="tag-item">akhlak</a>
         </div>
-
-        <!-- FITUR KEUNGGULAN SECTION (SINGLE WHITE CONTAINER) -->
-        <div class="bg-white rounded-3xl p-6 border border-slate-200/70 shadow-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 divide-y sm:divide-y-0 sm:divide-x divide-slate-100">
-            
-            <div class="flex items-start gap-4 px-2 pt-2 sm:pt-0">
-                <div class="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0">
-                    <i data-lucide="search" class="w-6 h-6"></i>
-                </div>
-                <div>
-                    <h4 class="text-sm font-bold text-mizan-navy">Pencarian Cepat</h4>
-                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">Cari hadis dengan cepat berdasarkan kata kunci, perawi, atau tema.</p>
-                </div>
-            </div>
-
-            <div class="flex items-start gap-4 px-2 pt-4 sm:pt-0">
-                <div class="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
-                    <i data-lucide="shield-check" class="w-6 h-6"></i>
-                </div>
-                <div>
-                    <h4 class="text-sm font-bold text-mizan-navy">Sumber Terpercaya</h4>
-                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">Bersumber dari kitab hadis shahih dengan penilaian keaslian hadis.</p>
-                </div>
-            </div>
-
-            <div class="flex items-start gap-4 px-2 pt-4 sm:pt-0">
-                <div class="w-12 h-12 rounded-2xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600 shrink-0">
-                    <i data-lucide="bookmark" class="w-6 h-6"></i>
-                </div>
-                <div>
-                    <h4 class="text-sm font-bold text-mizan-navy">Simpan & Kelola</h4>
-                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">Simpan hadis favorit Anda dan akses kapan saja dengan mudah.</p>
-                </div>
-            </div>
-
-            <div class="flex items-start gap-4 px-2 pt-4 sm:pt-0">
-                <div class="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600 shrink-0">
-                    <i data-lucide="lightbulb" class="w-6 h-6"></i>
-                </div>
-                <div>
-                    <h4 class="text-sm font-bold text-mizan-navy">Tafsir & Penjelasan</h4>
-                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">Pahami makna hadis dengan tafsir ringkas dan penjelasan yang mudah dipahami.</p>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- FOOTER CARD CONTAINER -->
-        <footer class="bg-mizan-navy text-white rounded-3xl p-8 sm:p-10 shadow-lg border border-slate-800 space-y-8">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 border-b border-slate-800/80 pb-8">
-                
-                <!-- BRANDING LEFT -->
-                <div class="md:col-span-4 space-y-3">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-slate-800/80 flex items-center justify-center text-mizan-gold border border-amber-500/30">
-                            <i data-lucide="scale" class="w-6 h-6"></i>
-                        </div>
-                        <div>
-                            <h2 class="text-base font-serif font-bold tracking-wider text-white">PROJECT MIZAN</h2>
-                            <p class="text-[9px] uppercase tracking-widest text-mizan-gold font-bold">Mesin Pencari Hadis</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TAUTAN CEPAT MIDDLE -->
-                <div class="md:col-span-3 space-y-2">
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300 mb-3">Tautan Cepat</h4>
-                    <ul class="space-y-2 text-xs text-slate-400 font-medium">
-                        <li><a href="index.html" class="hover:text-mizan-gold transition flex items-center gap-2"><i data-lucide="home" class="w-3.5 h-3.5"></i> Beranda</a></li>
-                        <li><a href="search.html" class="hover:text-mizan-gold transition flex items-center gap-2"><i data-lucide="search" class="w-3.5 h-3.5"></i> Pencarian</a></li>
-                        <li><a href="#" class="hover:text-mizan-gold transition flex items-center gap-2"><i data-lucide="bookmark" class="w-3.5 h-3.5"></i> Bookmark</a></li>
-                        <li><a href="#" class="hover:text-mizan-gold transition flex items-center gap-2"><i data-lucide="info" class="w-3.5 h-3.5"></i> Tentang Project Mizan</a></li>
-                    </ul>
-                </div>
-
-                <!-- TENTANG RIGHT -->
-                <div class="md:col-span-5 space-y-3">
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">Tentang Project Mizan</h4>
-                    <p class="text-xs text-slate-400 leading-relaxed font-normal">
-                        Project Mizan adalah perpustakaan digital hadis yang bertujuan memudahkan umat Islam dalam mencari, membaca, memahami, dan mengamalkan hadis Nabi ﷺ.
-                    </p>
-                    <div class="flex items-center gap-4 text-xs text-mizan-gold font-medium pt-1">
-                        <span class="flex items-center gap-1.5"><i data-lucide="shield" class="w-3.5 h-3.5"></i> Gratis</span>
-                        <span>•</span>
-                        <span class="flex items-center gap-1.5"><i data-lucide="code-2" class="w-3.5 h-3.5"></i> Terbuka</span>
-                        <span>•</span>
-                        <span class="flex items-center gap-1.5"><i data-lucide="heart" class="w-3.5 h-3.5"></i> Bermanfaat</span>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- COPYRIGHT -->
-            <div class="text-center text-xs text-slate-500 font-medium">
-                <p>© <script>document.write(new Date().getFullYear())</script> Project Mizan. All rights reserved. Designed & Developed by <span class="text-slate-300 font-semibold">Deny D</span> <span class="italic font-normal">--sendaljepitmushola--</span></p>
-            </div>
-        </footer>
-
+      </div>
     </div>
 
-    <script>
-        lucide.createIcons();
-    </script>
+  </div>
+
 </body>
 </html>
