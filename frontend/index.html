@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Project Mizan - Mesin Pencari Hadis</title>
 
-  <!-- Google Fonts Presisi: Playfair Display & Inter -->
+  <!-- Google Fonts: Playfair Display & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600&display=swap" rel="stylesheet">
@@ -18,10 +18,10 @@
     }
 
     :root {
-      --navy-primary: #0C2340;
-      --gold-accent: #C59B27;
-      --bg-slate: #F3F5F9;
-      --text-dark: #1A202C;
+      --navy-primary: #0F284B;
+      --gold-accent: #B58422;
+      --bg-slate: #F1F4F9;
+      --text-dark: #1E293B;
       --text-gray: #64748B;
     }
 
@@ -41,25 +41,27 @@
     }
 
     /* ==========================================
-       HERO CONTAINER
+       HERO CONTAINER (MENGUNAKAN BG-HEADER.PNG)
        ========================================== */
     .hero-container {
       position: relative;
       background-image: url('bg-header.png'); 
-      background-size: cover;
-      background-position: center;
+      /* Atur ukuran dan posisi background agar gambar kanan tidak naik ke navbar */
+      background-size: 100% auto; 
+      background-position: center bottom;
       background-repeat: no-repeat;
+      background-color: #FFFFFF;
       border-radius: 32px;
-      padding: 32px 48px 110px 48px;
-      box-shadow: 0 15px 40px rgba(12, 35, 64, 0.04);
-      min-height: 420px;
+      padding: 24px 48px 120px 48px;
+      box-shadow: 0 15px 40px rgba(15, 40, 75, 0.04);
+      min-height: 440px;
       overflow: hidden;
     }
 
-    /* NAVBAR + IKON */
+    /* NAVBAR */
     .navbar {
       position: relative;
-      z-index: 10;
+      z-index: 20;
       display: flex;
       justify-content: flex-end;
       margin-bottom: 20px;
@@ -69,6 +71,12 @@
       display: flex;
       gap: 28px;
       list-style: none;
+      /* Background tipis transparan menjaga teks navigasi tidak tertutup/bentrok gambar */
+      background: rgba(255, 255, 255, 0.85);
+      padding: 8px 20px;
+      border-radius: 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+      backdrop-filter: blur(6px);
     }
 
     .nav-item a {
@@ -77,7 +85,7 @@
       gap: 8px;
       text-decoration: none;
       color: var(--text-gray);
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 600;
       transition: color 0.2s;
     }
@@ -93,7 +101,7 @@
     .nav-item.active a::after {
       content: '';
       position: absolute;
-      bottom: -6px;
+      bottom: -4px;
       left: 0;
       width: 100%;
       height: 3px;
@@ -104,7 +112,7 @@
     /* HERO CONTENT GRID */
     .hero-content {
       position: relative;
-      z-index: 5;
+      z-index: 10;
       display: grid;
       grid-template-columns: 280px 1fr;
       align-items: center;
@@ -120,11 +128,11 @@
       text-align: center;
     }
 
-    /* LOGO TIMBANGAN VECTOR TAJAM */
+    /* LOGO VECTOR ELEGAN & PRESISI BANGET */
     .brand-logo-svg {
-      width: 105px;
+      width: 160px; /* Ukuran diperbesar biar gagah & pas */
       height: auto;
-      margin-bottom: 12px;
+      margin-bottom: 6px;
     }
 
     .brand-tag {
@@ -132,16 +140,16 @@
       font-size: 0.78rem;
       font-weight: 800;
       color: var(--navy-primary);
-      letter-spacing: 4px;
+      letter-spacing: 5px;
     }
 
     .brand-title {
       font-family: 'Playfair Display', serif;
-      font-size: 3.2rem;
-      font-weight: 800;
+      font-size: 3.3rem;
+      font-weight: 900;
       color: var(--navy-primary);
-      letter-spacing: 1.5px;
-      line-height: 0.95;
+      letter-spacing: 1px;
+      line-height: 0.9;
       margin: 2px 0 4px 0;
     }
 
@@ -149,12 +157,12 @@
       font-size: 0.72rem;
       font-weight: 800;
       color: var(--gold-accent);
-      letter-spacing: 2px;
+      letter-spacing: 2.5px;
     }
 
     .brand-meta {
       margin-top: 18px;
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       color: var(--navy-primary);
       line-height: 1.45;
     }
@@ -171,18 +179,17 @@
 
     /* HEADLINE (TENGAH) */
     .headline-section {
+      max-width: 480px;
       padding-left: 10px;
-      max-width: 460px;
     }
 
     .headline-main {
       font-family: 'Playfair Display', serif;
-      font-size: 2.85rem;
+      font-size: 2.9rem;
       font-weight: 800;
       color: var(--navy-primary);
       line-height: 1.18;
       letter-spacing: -0.5px;
-      text-transform: none;
     }
 
     .headline-main span.gold-text {
@@ -199,16 +206,16 @@
     /* FLOATING SEARCH BAR */
     .search-wrapper {
       position: relative;
-      z-index: 20;
+      z-index: 30;
       max-width: 780px;
-      margin: -50px auto 0 auto;
+      margin: -45px auto 0 auto;
     }
 
     .search-card {
       background: #FFFFFF;
       border-radius: 22px;
       padding: 16px 20px;
-      box-shadow: 0 15px 35px rgba(12, 35, 64, 0.08);
+      box-shadow: 0 15px 35px rgba(15, 40, 75, 0.08);
       border: 1px solid #F1F5F9;
     }
 
@@ -288,7 +295,7 @@
 
     <header class="hero-container">
 
-      <!-- NAVBAR DENGAN IKON -->
+      <!-- NAVBAR -->
       <nav class="navbar">
         <ul class="nav-list">
           <li class="nav-item active">
@@ -323,14 +330,28 @@
         
         <!-- BRANDING (KIRI) -->
         <div class="brand-section">
-          <!-- LOGO TIMBANGAN VECTOR (TAJAM & TIDAK AKAN BLUR) -->
-          <svg class="brand-logo-svg" viewBox="0 0 100 65" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 38 C 30 30 50 34 50 43 C 50 34 70 30 88 38 L 88 44 C 70 36 50 40 50 49 C 50 40 30 36 12 44 Z" fill="#0C2340"/>
-            <path d="M16 35 C 32 29 50 33 50 40 C 50 33 68 29 84 35 L 84 38 C 68 32 50 37 50 44 C 50 37 32 32 16 38 Z" fill="#C59B27"/>
-            <line x1="50" y1="8" x2="50" y2="40" stroke="#C59B27" stroke-width="2"/>
-            <path d="M25 18 Q 50 12 75 18" stroke="#C59B27" stroke-width="1.8" fill="none"/>
-            <path d="M18 26 Q 25 31 32 26 Z" fill="#C59B27"/>
-            <path d="M68 26 Q 75 31 82 26 Z" fill="#C59B27"/>
+          <!-- LOGO TIMBANGAN VECTOR PRESISI KELAS ATAS -->
+          <svg class="brand-logo-svg" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- BUKU TERBUKA NAVY -->
+            <path d="M20 75 C 55 60 95 68 100 85 C 105 68 145 60 180 75 L 180 88 C 145 73 105 81 100 98 C 95 81 55 73 20 88 Z" fill="#0F284B"/>
+            <path d="M25 70 C 57 56 95 64 100 80 C 105 64 143 56 175 70 L 175 74 C 143 60 105 68 100 84 C 95 68 57 60 25 74 Z" fill="#B58422"/>
+            
+            <!-- TIANG TIMBANGAN GOLD -->
+            <line x1="100" y1="18" x2="100" y2="76" stroke="#B58422" stroke-width="3" stroke-linecap="round"/>
+            <polygon points="100,12 104,18 96,18" fill="#B58422"/>
+            
+            <!-- TIANG HORISONTAL -->
+            <path d="M42 36 Q 100 24 158 36" stroke="#B58422" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            
+            <!-- PIRINGAN TIMBANGAN KIRI -->
+            <line x1="42" y1="36" x2="30" y2="52" stroke="#B58422" stroke-width="1.5"/>
+            <line x1="42" y1="36" x2="54" y2="52" stroke="#B58422" stroke-width="1.5"/>
+            <path d="M26 52 Q 42 60 58 52 Z" fill="#B58422"/>
+
+            <!-- PIRINGAN TIMBANGAN KANAN -->
+            <line x1="158" y1="36" x2="146" y2="52" stroke="#B58422" stroke-width="1.5"/>
+            <line x1="158" y1="36" x2="170" y2="52" stroke="#B58422" stroke-width="1.5"/>
+            <path d="M142 52 Q 158 60 174 52 Z" fill="#B58422"/>
           </svg>
 
           <span class="brand-tag">PROJECT</span>
@@ -356,7 +377,7 @@
 
     </header>
 
-    <!-- SEARCH BAR -->
+    <!-- FLOATING SEARCH BAR -->
     <div class="search-wrapper">
       <div class="search-card">
         <div class="search-input-box">
