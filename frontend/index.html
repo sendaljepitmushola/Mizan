@@ -41,11 +41,12 @@
     }
 
     /* ==========================================
-       HERO CONTAINER (FULL BACKGROUND BACK TO NORMAL)
+       HERO CONTAINER 
        ========================================== */
     .hero-container {
       position: relative;
-      background-image: url('bg-header.png'); 
+      /* Tambah ?v=2 untuk membakar cache browser agar gambar terbaru langsung ter-fetch */
+      background-image: url('bg-header.png?v=2'); 
       background-size: cover; 
       background-position: center bottom;
       background-repeat: no-repeat;
@@ -53,11 +54,11 @@
       border-radius: 32px;
       padding: 28px 48px 130px 48px;
       box-shadow: 0 15px 40px rgba(15, 40, 75, 0.04);
-      min-height: 480px; /* Bikin agak tinggi dikit biar kubah gak mepet ke navbar */
+      min-height: 480px;
       overflow: hidden;
     }
 
-    /* NAVBAR WITH BLUR BACKDROP AGAR TEKS NAVBAR TETAP JELAS */
+    /* NAVBAR */
     .navbar {
       position: relative;
       z-index: 20;
@@ -70,7 +71,7 @@
       display: flex;
       gap: 28px;
       list-style: none;
-      background: rgba(255, 255, 255, 0.6); /* Proteksi transparan biar teks navbar aman dibaca */
+      background: rgba(255, 255, 255, 0.6);
       padding: 6px 18px;
       border-radius: 20px;
       backdrop-filter: blur(8px);
