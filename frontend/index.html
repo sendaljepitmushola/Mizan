@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Project Mizan - Mesin Pencari Hadis</title>
 
-  <!-- Google Fonts -->
+  <!-- Import Font Playfair Display (Serif Mockup) & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -18,9 +18,8 @@
     }
 
     :root {
-      --navy-deep: #0A192F;
       --navy-primary: #0F284B;
-      --gold-accent: #C5932B;
+      --gold-accent: #B8860B;
       --bg-slate: #F4F6F9;
       --text-dark: #1E293B;
       --text-gray: #64748B;
@@ -41,12 +40,10 @@
       max-width: 1180px;
     }
 
-    /* ==========================================
-       HERO CONTAINER (KARTU UTAMA)
-       ========================================== */
+    /* KARTU UTAMA */
     .hero-container {
       position: relative;
-      background-color: #FFFFFF;
+      background-color: #FAFAFA;
       border-radius: 36px;
       padding: 36px 48px 130px 48px;
       box-shadow: 0 15px 40px rgba(15, 40, 75, 0.04);
@@ -54,7 +51,7 @@
       min-height: 440px;
     }
 
-    /* BINGKAI ARCH KIRI (PURE CSS) */
+    /* FRAME LENGKUNG KIRI (PILIHAN DARI STRUKTUR AWAL LU) */
     .arch-bg-left {
       position: absolute;
       top: -20px;
@@ -78,19 +75,23 @@
       border-top-right-radius: 188px;
     }
 
-    /* ILUSTRASI MASJID DI KANAN (DIECER UKURANNYA BIAR NGAK KEBESARAN) */
+    /* GAMBAR KANAN + BLEND SMUDGE (TIDAK PATAH) */
     .hero-illustration-right {
       position: absolute;
       top: 0;
       right: 0;
-      width: 420px; /* Ukuran dipasin biar nggak makan tempat ke tengah */
+      width: 480px;
       height: 100%;
       background-image: url('kanan.png');
-      background-size: contain;
+      background-size: cover;
       background-repeat: no-repeat;
-      background-position: right top;
+      background-position: center right;
       z-index: 2;
       pointer-events: none;
+
+      /* Bikin batas kiri gambar memudar menyatu dengan background */
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%);
+      mask-image: linear-gradient(to right, transparent 0%, black 20%);
     }
 
     /* NAVBAR */
@@ -116,14 +117,10 @@
       color: var(--text-gray);
       font-size: 0.92rem;
       font-weight: 600;
-      transition: color 0.2s;
-    }
-
-    .nav-item a:hover, .nav-item.active a {
-      color: var(--navy-primary);
     }
 
     .nav-item.active a {
+      color: var(--navy-primary);
       position: relative;
     }
 
@@ -138,7 +135,7 @@
       border-radius: 2px;
     }
 
-    /* HERO CONTENT GRID */
+    /* HERO CONTENT */
     .hero-content {
       position: relative;
       z-index: 5;
@@ -153,35 +150,40 @@
     .brand-section {
       display: flex;
       flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
 
+    /* SVG LOGO EMBEDDED (TIMBANGAN + BUKU) */
     .brand-logo-svg {
-      width: 110px;
+      width: 120px;
       height: auto;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .brand-tag {
-      font-size: 0.72rem;
-      font-weight: 800;
-      color: var(--gold-accent);
-      letter-spacing: 3px;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--navy-primary);
+      letter-spacing: 4px;
     }
 
     .brand-title {
-      font-size: 2.6rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 3.2rem;
       font-weight: 800;
       color: var(--navy-primary);
-      letter-spacing: 1.5px;
+      letter-spacing: 2px;
       line-height: 0.95;
       margin: 2px 0 4px 0;
     }
 
     .brand-sub {
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       font-weight: 800;
       color: var(--gold-accent);
-      letter-spacing: 1.8px;
+      letter-spacing: 2px;
     }
 
     .brand-meta {
@@ -202,10 +204,11 @@
     }
 
     .headline-main {
-      font-size: 2.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.7rem;
       font-weight: 800;
       color: var(--navy-primary);
-      line-height: 1.25;
+      line-height: 1.2;
       letter-spacing: -0.5px;
     }
 
@@ -215,14 +218,12 @@
 
     .headline-sub {
       margin-top: 10px;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       color: var(--text-gray);
       font-weight: 500;
     }
 
-    /* ==========================================
-       SEARCH BAR OVERLAY
-       ========================================== */
+    /* SEARCH BAR */
     .search-wrapper {
       position: relative;
       z-index: 20;
@@ -245,10 +246,6 @@
       border: 1.5px solid #E2E8F0;
       border-radius: 14px;
       padding: 5px 5px 5px 16px;
-    }
-
-    .search-input-box:focus-within {
-      border-color: var(--navy-primary);
     }
 
     .search-icon {
@@ -301,11 +298,6 @@
       font-weight: 600;
       text-decoration: none;
     }
-
-    .tag-item:hover {
-      background: #E2E8F0;
-      color: var(--navy-primary);
-    }
   </style>
 </head>
 <body>
@@ -314,15 +306,15 @@
 
     <header class="hero-container">
       
-      <!-- Frame Arch Kiri -->
+      <!-- Arch Kiri -->
       <div class="arch-bg-left">
         <div class="arch-bg-left-inner"></div>
       </div>
 
-      <!-- Ilustrasi Kanan -->
+      <!-- Gambar Kanan -->
       <div class="hero-illustration-right"></div>
 
-      <!-- NAVBAR -->
+      <!-- Navbar -->
       <nav class="navbar">
         <ul class="nav-list">
           <li class="nav-item active"><a href="#">Beranda</a></li>
@@ -332,19 +324,19 @@
         </ul>
       </nav>
 
-      <!-- CONTENT GRID -->
+      <!-- Content -->
       <div class="hero-content">
         
-        <!-- BRANDING (KIRI) -->
+        <!-- Branding Kiri -->
         <div class="brand-section">
-          <!-- Logo Timbangan Mizan (Vector SVG Presisi) -->
-          <svg class="brand-logo-svg" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 40 C 30 32 50 36 50 45 C 50 36 70 32 90 40 L 90 46 C 70 38 50 43 50 52 C 50 43 30 38 10 46 Z" fill="#0F284B"/>
-            <path d="M15 37 C 30 31 50 35 50 42 C 50 35 70 31 85 37 L 85 40 C 70 34 50 39 50 47 C 50 39 30 34 15 40 Z" fill="#C5932B"/>
-            <line x1="50" y1="8" x2="50" y2="42" stroke="#C5932B" stroke-width="2"/>
-            <path d="M25 18 Q 50 12 75 18" stroke="#C5932B" stroke-width="1.8" fill="none"/>
-            <path d="M18 27 Q 25 31 32 27 Z" fill="#C5932B"/>
-            <path d="M68 27 Q 75 31 82 27 Z" fill="#C5932B"/>
+          <!-- Logo Timbangan & Buku Vector Direct (Nggak Akan Broken) -->
+          <svg class="brand-logo-svg" viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 42 C 35 34 60 38 60 48 C 60 38 85 34 105 42 L 105 48 C 85 40 60 45 60 55 C 60 45 35 40 15 48 Z" fill="#0F284B"/>
+            <path d="M20 39 C 38 33 60 37 60 45 C 60 37 82 33 100 39 L 100 42 C 82 36 60 41 60 49 C 60 41 38 36 20 42 Z" fill="#B8860B"/>
+            <line x1="60" y1="10" x2="60" y2="45" stroke="#B8860B" stroke-width="2.5"/>
+            <path d="M30 20 Q 60 14 90 20" stroke="#B8860B" stroke-width="2" fill="none"/>
+            <path d="M22 30 Q 30 35 38 30 Z" fill="#B8860B"/>
+            <path d="M82 30 Q 90 35 98 30 Z" fill="#B8860B"/>
           </svg>
 
           <span class="brand-tag">PROJECT</span>
@@ -353,11 +345,11 @@
 
           <p class="brand-meta">
             Designed & Developed by <strong>Deny D</strong><br>
-            <span style="color: #94A3B8;">--sendaljepitmushola--</span>
+            <span style="color: #94A3B8; font-style: italic;">--sendaljepitmushola--</span>
           </p>
         </div>
 
-        <!-- HEADLINE (TENGAH) -->
+        <!-- Headline Tengah -->
         <div class="headline-section">
           <h2 class="headline-main">
             Temukan Hadis.<br>
@@ -370,7 +362,7 @@
 
     </header>
 
-    <!-- SEARCH BAR -->
+    <!-- Search Bar -->
     <div class="search-wrapper">
       <div class="search-card">
         <div class="search-input-box">
@@ -387,7 +379,7 @@
           <a href="#" class="tag-item">puasa</a>
           <a href="#" class="tag-item">zakat</a>
           <a href="#" class="tag-item">jihad</a>
-          <a href="#" class="tag-item">akhlak</a>
+          <a href="#" class="tag-item">akhalk</a>
         </div>
       </div>
     </div>
