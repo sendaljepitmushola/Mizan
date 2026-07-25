@@ -41,36 +41,39 @@
     }
 
     /* ==========================================
-       HERO CONTAINER (BG FIXED SCALE)
+       HERO CONTAINER (FULL BACKGROUND BACK TO NORMAL)
        ========================================== */
     .hero-container {
       position: relative;
       background-image: url('bg-header.png'); 
-      /* KUNCI SUPAYA TIDAK MELAR / NABRAK NAVBAR */
-      background-size: 520px auto; 
-      background-position: right bottom;
+      background-size: cover; 
+      background-position: center bottom;
       background-repeat: no-repeat;
       background-color: #FFFFFF;
       border-radius: 32px;
-      padding: 32px 48px 110px 48px;
+      padding: 28px 48px 130px 48px;
       box-shadow: 0 15px 40px rgba(15, 40, 75, 0.04);
-      min-height: 420px;
+      min-height: 480px; /* Bikin agak tinggi dikit biar kubah gak mepet ke navbar */
       overflow: hidden;
     }
 
-    /* NAVBAR */
+    /* NAVBAR WITH BLUR BACKDROP AGAR TEKS NAVBAR TETAP JELAS */
     .navbar {
       position: relative;
       z-index: 20;
       display: flex;
       justify-content: flex-end;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
 
     .nav-list {
       display: flex;
       gap: 28px;
       list-style: none;
+      background: rgba(255, 255, 255, 0.6); /* Proteksi transparan biar teks navbar aman dibaca */
+      padding: 6px 18px;
+      border-radius: 20px;
+      backdrop-filter: blur(8px);
     }
 
     .nav-item a {
@@ -111,7 +114,6 @@
       grid-template-columns: 280px 1fr;
       align-items: center;
       gap: 30px;
-      margin-top: 10px;
     }
 
     /* BRANDING (KIRI) */
