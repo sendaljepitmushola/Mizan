@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Project Mizan - Mesin Pencari Hadis</title>
 
-  <!-- Google Fonts: Playfair Display & Inter -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600&display=swap" rel="stylesheet">
@@ -29,7 +29,7 @@
       font-family: 'Inter', sans-serif;
       background-color: var(--bg-slate);
       color: var(--text-dark);
-      padding: 40px 20px;
+      padding: 24px 20px;
       display: flex;
       justify-content: center;
       -webkit-font-smoothing: antialiased;
@@ -41,20 +41,20 @@
     }
 
     /* ==========================================
-       HERO CONTAINER
+       HERO CONTAINER (FRAME GERBANG UTUH & MEPET ATAS)
        ========================================== */
     .hero-container {
       position: relative;
-      background-image: url('bg-header.png?v=2'); 
-      background-size: cover; 
-      background-position: center bottom;
+      background-image: url('bg-header.png'); 
+      /* Memaksa background menempel pas dari titik (0,0) atas-kiri tanpa terpotong */
+      background-size: 100% 100%; 
+      background-position: top left;
       background-repeat: no-repeat;
       background-color: #FFFFFF;
       border-radius: 32px;
-      /* Padding bawah dikurangi dari 130px ke 80px biar gak kepanjangan */
-      padding: 28px 48px 80px 48px;
+      /* Padding top kecil agar navbar pas di space atas */
+      padding: 16px 48px 120px 48px; 
       box-shadow: 0 15px 40px rgba(15, 40, 75, 0.04);
-      min-height: 420px;
       overflow: hidden;
     }
 
@@ -64,16 +64,17 @@
       z-index: 20;
       display: flex;
       justify-content: flex-end;
-      margin-bottom: 25px;
+      margin-top: 0px; 
+      margin-bottom: 20px;
     }
 
     .nav-list {
       display: flex;
-      gap: 28px;
+      gap: 24px;
       list-style: none;
-      background: rgba(255, 255, 255, 0.6);
-      padding: 6px 18px;
-      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.75);
+      padding: 8px 20px;
+      border-radius: 16px;
       backdrop-filter: blur(8px);
     }
 
@@ -83,7 +84,7 @@
       gap: 8px;
       text-decoration: none;
       color: var(--text-gray);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 600;
       transition: color 0.2s;
     }
@@ -112,9 +113,10 @@
       position: relative;
       z-index: 10;
       display: grid;
-      grid-template-columns: 280px 1fr;
+      grid-template-columns: 260px 1fr;
       align-items: center;
       gap: 30px;
+      margin-top: 10px;
     }
 
     /* BRANDING (KIRI) */
@@ -126,42 +128,42 @@
     }
 
     .brand-logo-img {
-      width: 180px;
+      width: 140px;
       height: auto;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
       display: block;
     }
 
     .brand-tag {
       font-family: 'Playfair Display', serif;
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       font-weight: 800;
       color: var(--navy-primary);
-      letter-spacing: 5px;
+      letter-spacing: 4px;
     }
 
     .brand-title {
       font-family: 'Playfair Display', serif;
-      font-size: 3.2rem;
+      font-size: 2.6rem;
       font-weight: 900;
       color: var(--navy-primary);
       letter-spacing: 1px;
       line-height: 0.9;
-      margin: 2px 0 4px 0;
+      margin: 2px 0 2px 0;
     }
 
     .brand-sub {
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       font-weight: 800;
       color: var(--gold-accent);
-      letter-spacing: 2.5px;
+      letter-spacing: 2px;
     }
 
     .brand-meta {
-      margin-top: 18px;
-      font-size: 0.75rem;
+      margin-top: 10px;
+      font-size: 0.72rem;
       color: var(--navy-primary);
-      line-height: 1.45;
+      line-height: 1.35;
     }
 
     .brand-meta strong {
@@ -182,10 +184,10 @@
 
     .headline-main {
       font-family: 'Playfair Display', serif;
-      font-size: 2.85rem;
+      font-size: 2.75rem;
       font-weight: 800;
       color: var(--navy-primary);
-      line-height: 1.18;
+      line-height: 1.15;
       letter-spacing: -0.5px;
     }
 
@@ -194,28 +196,25 @@
     }
 
     .headline-sub {
-      margin-top: 10px;
-      font-size: 0.95rem;
+      margin-top: 6px;
+      font-size: 0.92rem;
       color: #334155;
       font-weight: 500;
     }
 
-    /* ==========================================
-       FLOATING SEARCH BAR (FIXED POSITION)
-       ========================================== */
+    /* FLOATING SEARCH BAR */
     .search-wrapper {
       position: relative;
       z-index: 30;
-      max-width: 740px; /* Bikin ukurannya pas kaya mockup */
-      /* Naikkan posisi ke atas mepet dengan tumpukan buku/pot bunga */
-      margin: -75px auto 0 auto; 
+      max-width: 860px;
+      margin: -65px auto 0 auto;
     }
 
     .search-card {
       background: #FFFFFF;
       border-radius: 24px;
-      padding: 18px 24px;
-      box-shadow: 0 20px 45px rgba(15, 40, 75, 0.1);
+      padding: 16px 22px;
+      box-shadow: 0 18px 40px rgba(15, 40, 75, 0.08);
       border: 1px solid rgba(226, 232, 240, 0.8);
     }
 
@@ -225,7 +224,7 @@
       background: #FFFFFF;
       border: 1.5px solid #E2E8F0;
       border-radius: 16px;
-      padding: 6px 6px 6px 18px;
+      padding: 5px 5px 5px 18px;
     }
 
     .search-input-box:focus-within {
@@ -262,12 +261,12 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-top: 14px;
+      margin-top: 12px;
       flex-wrap: wrap;
     }
 
     .tags-label {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 600;
       color: var(--text-gray);
       margin-right: 4px;
@@ -278,7 +277,7 @@
       color: #475569;
       padding: 4px 12px;
       border-radius: 16px;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 600;
       text-decoration: none;
     }
@@ -286,6 +285,48 @@
     .tag-item:hover {
       background: #E2E8F0;
       color: var(--navy-primary);
+    }
+
+    /* STATS SECTION */
+    .stats-container {
+      margin-top: 24px;
+      background: #FFFFFF;
+      border-radius: 24px;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      box-shadow: 0 10px 30px rgba(15, 40, 75, 0.03);
+    }
+
+    .stat-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 16px;
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #F1F5F9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .stat-number {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--navy-primary);
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-gray);
+      font-weight: 500;
     }
   </style>
 </head>
@@ -373,6 +414,38 @@
           <a href="#" class="tag-item">zakat</a>
           <a href="#" class="tag-item">jihad</a>
           <a href="#" class="tag-item">akhlak</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS SECTION -->
+    <div class="stats-container">
+      <div class="stat-card">
+        <div class="stat-icon">📖</div>
+        <div>
+          <div class="stat-number">6</div>
+          <div class="stat-label">Kitab Hadis</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📄</div>
+        <div>
+          <div class="stat-number">~ 60.000+</div>
+          <div class="stat-label">Total Hadis</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div>
+          <div class="stat-number">1.000+</div>
+          <div class="stat-label">Perawi</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🛡️</div>
+        <div>
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Gratis & Terbuka</div>
         </div>
       </div>
     </div>
