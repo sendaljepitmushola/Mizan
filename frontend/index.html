@@ -41,20 +41,20 @@
     }
 
     /* ==========================================
-       HERO CONTAINER (MENGUNAKAN BG-HEADER.PNG)
+       HERO CONTAINER (BG FIXED SCALE)
        ========================================== */
     .hero-container {
       position: relative;
       background-image: url('bg-header.png'); 
-      /* Atur ukuran dan posisi background agar gambar kanan tidak naik ke navbar */
-      background-size: 100% auto; 
-      background-position: center bottom;
+      /* KUNCI SUPAYA TIDAK MELAR / NABRAK NAVBAR */
+      background-size: 520px auto; 
+      background-position: right bottom;
       background-repeat: no-repeat;
       background-color: #FFFFFF;
       border-radius: 32px;
-      padding: 24px 48px 120px 48px;
+      padding: 32px 48px 110px 48px;
       box-shadow: 0 15px 40px rgba(15, 40, 75, 0.04);
-      min-height: 440px;
+      min-height: 420px;
       overflow: hidden;
     }
 
@@ -71,12 +71,6 @@
       display: flex;
       gap: 28px;
       list-style: none;
-      /* Background tipis transparan menjaga teks navigasi tidak tertutup/bentrok gambar */
-      background: rgba(255, 255, 255, 0.85);
-      padding: 8px 20px;
-      border-radius: 30px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-      backdrop-filter: blur(6px);
     }
 
     .nav-item a {
@@ -101,7 +95,7 @@
     .nav-item.active a::after {
       content: '';
       position: absolute;
-      bottom: -4px;
+      bottom: -6px;
       left: 0;
       width: 100%;
       height: 3px;
@@ -128,11 +122,11 @@
       text-align: center;
     }
 
-    /* LOGO VECTOR ELEGAN & PRESISI BANGET */
+    /* LOGO VECTOR TIMBANGAN */
     .brand-logo-svg {
-      width: 160px; /* Ukuran diperbesar biar gagah & pas */
+      width: 140px;
       height: auto;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .brand-tag {
@@ -145,7 +139,7 @@
 
     .brand-title {
       font-family: 'Playfair Display', serif;
-      font-size: 3.3rem;
+      font-size: 3.2rem;
       font-weight: 900;
       color: var(--navy-primary);
       letter-spacing: 1px;
@@ -185,7 +179,7 @@
 
     .headline-main {
       font-family: 'Playfair Display', serif;
-      font-size: 2.9rem;
+      font-size: 2.85rem;
       font-weight: 800;
       color: var(--navy-primary);
       line-height: 1.18;
@@ -330,7 +324,7 @@
         
         <!-- BRANDING (KIRI) -->
         <div class="brand-section">
-          <!-- LOGO TIMBANGAN VECTOR PRESISI KELAS ATAS -->
+          <!-- LOGO TIMBANGAN VECTOR -->
           <svg class="brand-logo-svg" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
             <!-- BUKU TERBUKA NAVY -->
             <path d="M20 75 C 55 60 95 68 100 85 C 105 68 145 60 180 75 L 180 88 C 145 73 105 81 100 98 C 95 81 55 73 20 88 Z" fill="#0F284B"/>
