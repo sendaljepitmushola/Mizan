@@ -41,11 +41,10 @@
     }
 
     /* ==========================================
-       HERO CONTAINER 
+       HERO CONTAINER
        ========================================== */
     .hero-container {
       position: relative;
-      /* Tambah ?v=2 untuk membakar cache browser agar gambar terbaru langsung ter-fetch */
       background-image: url('bg-header.png?v=2'); 
       background-size: cover; 
       background-position: center bottom;
@@ -125,11 +124,12 @@
       text-align: center;
     }
 
-    /* LOGO VECTOR TIMBANGAN */
-    .brand-logo-svg {
-      width: 140px;
+    /* LOGO GAMBAR DARI FILE PNG LU */
+    .brand-logo-img {
+      width: 180px; /* Ukuran bisa disesuaikan kalau mau lebih besar/kecil */
       height: auto;
       margin-bottom: 8px;
+      display: block;
     }
 
     .brand-tag {
@@ -327,29 +327,8 @@
         
         <!-- BRANDING (KIRI) -->
         <div class="brand-section">
-          <!-- LOGO TIMBANGAN VECTOR -->
-          <svg class="brand-logo-svg" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- BUKU TERBUKA NAVY -->
-            <path d="M20 75 C 55 60 95 68 100 85 C 105 68 145 60 180 75 L 180 88 C 145 73 105 81 100 98 C 95 81 55 73 20 88 Z" fill="#0F284B"/>
-            <path d="M25 70 C 57 56 95 64 100 80 C 105 64 143 56 175 70 L 175 74 C 143 60 105 68 100 84 C 95 68 57 60 25 74 Z" fill="#B58422"/>
-            
-            <!-- TIANG TIMBANGAN GOLD -->
-            <line x1="100" y1="18" x2="100" y2="76" stroke="#B58422" stroke-width="3" stroke-linecap="round"/>
-            <polygon points="100,12 104,18 96,18" fill="#B58422"/>
-            
-            <!-- TIANG HORISONTAL -->
-            <path d="M42 36 Q 100 24 158 36" stroke="#B58422" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-            
-            <!-- PIRINGAN TIMBANGAN KIRI -->
-            <line x1="42" y1="36" x2="30" y2="52" stroke="#B58422" stroke-width="1.5"/>
-            <line x1="42" y1="36" x2="54" y2="52" stroke="#B58422" stroke-width="1.5"/>
-            <path d="M26 52 Q 42 60 58 52 Z" fill="#B58422"/>
-
-            <!-- PIRINGAN TIMBANGAN KANAN -->
-            <line x1="158" y1="36" x2="146" y2="52" stroke="#B58422" stroke-width="1.5"/>
-            <line x1="158" y1="36" x2="170" y2="52" stroke="#B58422" stroke-width="1.5"/>
-            <path d="M142 52 Q 158 60 174 52 Z" fill="#B58422"/>
-          </svg>
+          <!-- MANGGIL FILE LOGO PNG DARI FOLDER FRONTEND -->
+          <img src="frontend/logo-mizan.png?v=2" alt="Logo Mizan" class="brand-logo-img">
 
           <span class="brand-tag">PROJECT</span>
           <h1 class="brand-title">MIZAN</h1>
