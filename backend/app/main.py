@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
 from .database import SessionLocal
 from .models import Book, Hadith
@@ -9,6 +10,15 @@ app = FastAPI(
     title="Project Mizan API",
     description="API untuk pencarian, verifikasi, dan eksplorasi hadis.",
     version="0.1.0",
+)
+
+# Izinkan request dari frontend (CORS)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
@@ -119,7 +129,7 @@ def get_hadiths(skip: int = 0, limit: int = 100):
     return hadiths
 
 
-@app.get("/hadiths/{hadith_id}", response_model=HadithResponse)
+@app.get("/hadiths/{hadith_id}", response_model=list[HadithResponse])
 def get_hadith(hadith_id: int):
     session = SessionLocal()
 

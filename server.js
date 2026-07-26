@@ -1,62 +1,47 @@
 const express = require('express');
-const cors = require('cors');
 const path = require('path');
-require('dotenv').config();
-
-const db = require('./db'); // Impor koneksi database
-
+const sqlite3 = require('sqlite3').verbose();
+const cors = require('cors');
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = 8000; // Dikunci di 8000
 
 app.use(cors());
-app.use(express.json());
-
-// Melayani file statis Frontend
 app.use(express.static(path.join(__dirname, 'frontend')));
 
-// Route Cek Status API
-app.get('/api/status', (req, res) => {
-    res.json({
-        status: 'online',
-        message: 'Project Mizan API Server Running!',
-        timestamp: new Date()
-    });
-});
+const dbPath = path.resolve(__dirname, 'database/sqlite/mizan.db');
+const db = new sqlite3.Database(dbPath);
 
-// Endpoint Pencarian Hadis API
-app.get('/api/search', (req, res) => {
-    const query = req.query.q || '';
-    const book = req.query.book || '';
+app.get('/hadiths/search', (req, res) => {
+    const userInput = req.query.q;
+    if (!userInput) return res.json([]);
 
-    let sql = `SELECT * FROM hadiths WHERE 1=1`;
-    let params = [];
+    // Stopwords untuk membersihkan kalimat natural
+    const stopwords = ['apakah', 'ada', 'hadis', 'tentang', 'mengenai', 'untuk', 'dari', 'yang', 'dan', 'carikan', 'keutamaan'];
+    
+    const words = userInput.toLowerCase()
+        .replace(/[^\w\s]/g, "")
+        .split(/\s+/)
+        .filter(w => w.length > 2 && !stopwords.includes(w));
 
-    if (query) {
-        sql += ` AND (translation LIKE ? OR arabic LIKE ? OR narrator LIKE ?)`;
-        const searchPattern = `%${query}%`;
-        params.push(searchPattern, searchPattern, searchPattern);
+    if (words.length === 0) return res.json([]);
+
+    // Logika OR: Mencari hadis yang mengandung SALAH SATU kata kunci
+    let sql = `SELECT * FROM hadiths WHERE translation_id LIKE ?`;
+    let params = [`%${words[0]}%`];
+
+    for(let i = 1; i < words.length; i++) {
+        sql += ` OR translation_id LIKE ?`;
+        params.push(`%${words[i]}%`);
     }
 
-    if (book) {
-        sql += ` AND book_slug = ?`;
-        params.push(book);
-    }
+    sql += ` LIMIT 15`;
 
     db.all(sql, params, (err, rows) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
-        res.json({
-            total: rows.length,
-            query: query,
-            book: book,
-            results: rows
-        });
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(rows);
     });
 });
 
-app.listen(PORT, () => {
-    console.log(`=================================`);
-    console.log(`🚀 Server Mizan Berjalan di http://localhost:${PORT}`);
-    console.log(`=================================`);
+app.listen(port, () => {
+    console.log(`🚀 Server Mizan berjalan di http://localhost:${port}`);
 });

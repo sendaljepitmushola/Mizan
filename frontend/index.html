@@ -8,7 +8,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Amiri:wght@400;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -23,6 +23,8 @@
       --bg-slate: #F1F4F9;
       --text-dark: #1E293B;
       --text-gray: #64748B;
+      --badge-green: #10B981;
+      --badge-green-bg: #ECFDF5;
     }
 
     body {
@@ -41,18 +43,16 @@
     }
 
     /* ==========================================
-       HERO CONTAINER (FRAME GERBANG UTUH & MEPET ATAS)
+       HERO CONTAINER (FRAME GERBANG UTUH)
        ========================================== */
     .hero-container {
       position: relative;
       background-image: url('bg-header.png'); 
-      /* Memaksa background menempel pas dari titik (0,0) atas-kiri tanpa terpotong */
       background-size: 100% 100%; 
       background-position: top left;
       background-repeat: no-repeat;
       background-color: #FFFFFF;
       border-radius: 32px;
-      /* Padding top kecil agar navbar pas di space atas */
       padding: 16px 48px 120px 48px; 
       box-shadow: 0 15px 40px rgba(15, 40, 75, 0.04);
       overflow: hidden;
@@ -225,6 +225,7 @@
       border: 1.5px solid #E2E8F0;
       border-radius: 16px;
       padding: 5px 5px 5px 18px;
+      transition: border-color 0.2s;
     }
 
     .search-input-box:focus-within {
@@ -255,6 +256,11 @@
       font-weight: 700;
       font-size: 0.9rem;
       cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .btn-search:hover {
+      background-color: #1a3a68;
     }
 
     .tags-container {
@@ -280,11 +286,166 @@
       font-size: 0.76rem;
       font-weight: 600;
       text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
     }
 
     .tag-item:hover {
       background: #E2E8F0;
       color: var(--navy-primary);
+    }
+
+    /* ==========================================
+       RESULTS SECTION (HASIL PENCARIAN)
+       ========================================== */
+    .results-wrapper {
+      margin-top: 32px;
+      display: none; /* Muncul otomatis saat mengetik */
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 8px;
+    }
+
+    .results-count {
+      font-size: 0.95rem;
+      color: var(--text-gray);
+      font-weight: 600;
+    }
+
+    .results-count strong {
+      color: var(--navy-primary);
+    }
+
+    /* HADITH CARD */
+    .hadith-card {
+      background: #FFFFFF;
+      border-radius: 24px;
+      padding: 28px 32px;
+      box-shadow: 0 10px 30px rgba(15, 40, 75, 0.03);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .hadith-card:hover {
+      box-shadow: 0 15px 35px rgba(15, 40, 75, 0.06);
+    }
+
+    .hadith-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #F1F5F9;
+      padding-bottom: 16px;
+    }
+
+    .hadith-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .kitab-badge {
+      background: #F1F4F9;
+      color: var(--navy-primary);
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 6px 14px;
+      border-radius: 12px;
+    }
+
+    .hadith-number {
+      font-size: 0.85rem;
+      color: var(--text-gray);
+      font-weight: 600;
+    }
+
+    .grade-badge {
+      background: var(--badge-green-bg);
+      color: var(--badge-green);
+      font-weight: 700;
+      font-size: 0.78rem;
+      padding: 5px 12px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* MATAN ARAB */
+    .hadith-arabic {
+      font-family: 'Amiri', serif;
+      font-size: 1.65rem;
+      line-height: 2.3;
+      text-align: right;
+      direction: rtl;
+      color: #0F172A;
+      padding: 10px 0;
+    }
+
+    /* TERJEMAHAN */
+    .hadith-translation {
+      font-size: 0.98rem;
+      line-height: 1.75;
+      color: #334155;
+    }
+
+    .hadith-narrator {
+      font-weight: 700;
+      color: var(--navy-primary);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    /* ACTION BUTTONS */
+    .hadith-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      border-top: 1px solid #F1F5F9;
+      padding-top: 16px;
+    }
+
+    .btn-action {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      color: #475569;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-action:hover {
+      background: #F1F5F9;
+      color: var(--navy-primary);
+    }
+
+    .empty-state {
+      background: #FFFFFF;
+      border-radius: 24px;
+      padding: 48px 24px;
+      text-align: center;
+      color: var(--text-gray);
+    }
+
+    .empty-state h3 {
+      color: var(--navy-primary);
+      margin-bottom: 8px;
     }
 
     /* STATS SECTION */
@@ -401,20 +562,31 @@
       <div class="search-card">
         <div class="search-input-box">
           <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          <input type="text" class="search-input" placeholder="Cari hadis, perawi, tema, atau kata kunci...">
-          <button class="btn-search">Cari Hadis</button>
+          <input type="text" id="searchInput" class="search-input" placeholder="Cari hadis, perawi, tema, atau kata kunci...">
+          <button id="btnSearch" class="btn-search">Cari Hadis</button>
         </div>
 
         <div class="tags-container">
           <span class="tags-label">Contoh pencarian:</span>
-          <a href="#" class="tag-item">niat</a>
-          <a href="#" class="tag-item">iman</a>
-          <a href="#" class="tag-item">shalat</a>
-          <a href="#" class="tag-item">puasa</a>
-          <a href="#" class="tag-item">zakat</a>
-          <a href="#" class="tag-item">jihad</a>
-          <a href="#" class="tag-item">akhlak</a>
+          <button class="tag-item" onclick="triggerSearch('niat')">niat</button>
+          <button class="tag-item" onclick="triggerSearch('iman')">iman</button>
+          <button class="tag-item" onclick="triggerSearch('shalat')">shalat</button>
+          <button class="tag-item" onclick="triggerSearch('puasa')">puasa</button>
+          <button class="tag-item" onclick="triggerSearch('zakat')">zakat</button>
+          <button class="tag-item" onclick="triggerSearch('jihad')">jihad</button>
+          <button class="tag-item" onclick="triggerSearch('akhlak')">akhlak</button>
         </div>
+      </div>
+    </div>
+
+    <!-- AREA HASIL PENCARIAN -->
+    <div id="resultsWrapper" class="results-wrapper">
+      <div class="results-header">
+        <div class="results-count">Menampilkan hasil untuk: <strong id="queryTerm">-</strong></div>
+      </div>
+
+      <div id="resultsList" class="results-list">
+        <!-- Kartu hadis disuntikkan via JS di sini -->
       </div>
     </div>
 
@@ -451,6 +623,131 @@
     </div>
 
   </div>
+
+  <!-- JAVASCRIPT LOGIC (INTEGRASI API FASTAPI) -->
+  <script>
+    // Deteksi otomatis Host Localhost vs GitHub Codespaces
+    function getApiBaseUrl() {
+      const hostname = window.location.hostname;
+      if (hostname.includes("app.github.dev")) {
+        return `https://${hostname.replace(/-[0-9]+\./, "-8000.")}`;
+      }
+      return "http://127.0.0.1:8000";
+    }
+
+    const API_BASE_URL = getApiBaseUrl();
+
+    const searchInput = document.getElementById('searchInput');
+    const btnSearch = document.getElementById('btnSearch');
+    const resultsWrapper = document.getElementById('resultsWrapper');
+    const resultsList = document.getElementById('resultsList');
+    const queryTerm = document.getElementById('queryTerm');
+
+    let debounceTimer;
+
+    async function performSearch(keyword) {
+      const term = keyword.trim();
+      
+      // Jika kolom pencarian kosong, sembunyikan area hasil
+      if (!term) {
+        resultsWrapper.style.display = 'none';
+        return;
+      }
+
+      queryTerm.textContent = `"${keyword}"`;
+      resultsWrapper.style.display = 'flex';
+
+      // Indikator Loading
+      resultsList.innerHTML = `
+        <div class="empty-state">
+          <h3>Mencari hadis...</h3>
+          <p>Menghubungkan ke database Mizan...</p>
+        </div>
+      `;
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/hadiths/search?q=${encodeURIComponent(term)}`);
+        
+        if (!response.ok) {
+          throw new Error(`Server Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        renderResults(data);
+      } catch (error) {
+        console.error("Gagal mengambil data hadis:", error);
+        resultsList.innerHTML = `
+          <div class="empty-state">
+            <h3 style="color: #EF4444;">Koneksi Backend Terputus</h3>
+            <p>Gagal terhubung ke <code>${API_BASE_URL}</code>.<br>Pastikan Port 8000 di tab <strong>PORTS</strong> VS Code sudah di-set ke <strong>PUBLIC</strong>.</p>
+          </div>
+        `;
+      }
+    }
+
+    function renderResults(results) {
+      resultsList.innerHTML = '';
+
+      if (!results || results.length === 0) {
+        resultsList.innerHTML = `
+          <div class="empty-state">
+            <h3>Hadis tidak ditemukan</h3>
+            <p>Coba kata kunci lain dalam Bahasa Inggris seperti <strong>intention</strong>, <strong>prayer</strong>, atau <strong>knowledge</strong>.</p>
+          </div>
+        `;
+        return;
+      }
+
+      results.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'hadith-card';
+        card.innerHTML = `
+          <div class="hadith-header">
+            <div class="hadith-meta">
+              <span class="kitab-badge">Hadis System</span>
+              <span class="hadith-number">No. ${item.hadith_number}</span>
+            </div>
+            <span class="grade-badge">✓ ID: #${item.id}</span>
+          </div>
+
+          <div class="hadith-arabic">${item.arabic || 'Teks Arab tidak tersedia.'}</div>
+
+          <div class="hadith-translation">
+            "${item.translation_id || 'Terjemahan tidak tersedia.'}"
+          </div>
+
+          <div class="hadith-actions">
+            <button class="btn-action" onclick="copyHadith('${item.hadith_number}', \`${(item.translation_id || '').replace(/`/g, '')}\`)">
+              📋 Salin
+            </button>
+            <button class="btn-action">🔖 Bookmark</button>
+            <button class="btn-action">🔗 Bagikan</button>
+          </div>
+        `;
+        resultsList.appendChild(card);
+      });
+    }
+
+    function triggerSearch(term) {
+      searchInput.value = term;
+      performSearch(term);
+    }
+
+    function copyHadith(no, text) {
+      navigator.clipboard.writeText(`Hadis No. ${no}: ${text}`);
+      alert('Teks hadis berhasil disalin!');
+    }
+
+    // === LIVE SEARCH WITH DEBOUNCE ===
+    searchInput.addEventListener('input', (e) => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        performSearch(e.target.value);
+      }, 400); // Tunda 400ms
+    });
+
+    btnSearch.addEventListener('click', () => performSearch(searchInput.value));
+  </script>
 
 </body>
 </html>
