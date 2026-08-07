@@ -38,9 +38,12 @@
     }
 
     .wrapper {
-      width: 100%;
-      max-width: 1180px;
-    }
+  width: 100%;
+  max-width: 1180px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
 
     /* ==========================================
        HERO CONTAINER (FRAME GERBANG UTUH)
@@ -489,6 +492,83 @@
       color: var(--text-gray);
       font-weight: 500;
     }
+
+    /* Styling Bagian Footer */
+.footer-container {
+  width: 100%;
+  clear: both;
+  margin-top: 48px;
+  background: #FFFFFF;
+  border-radius: 24px;
+  padding: 36px 40px 24px 40px;
+  box-shadow: 0 10px 30px rgba(15, 40, 75, 0.03);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 40px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.footer-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--navy-primary);
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.footer-desc {
+  font-size: 0.85rem;
+  color: var(--text-gray);
+  line-height: 1.6;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: border-round;
+  gap: 48px;
+}
+
+.footer-column h4 {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--navy-primary);
+  margin-bottom: 12px;
+}
+
+.footer-column ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-column a {
+  text-decoration: none;
+  font-size: 0.82rem;
+  color: var(--text-gray);
+  transition: color 0.2s;
+}
+
+.footer-column a:hover {
+  color: var(--navy-primary);
+}
+
+.footer-bottom {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-gray);
+}
+
+.footer-bottom strong {
+  color: var(--navy-primary);
+}
   </style>
 </head>
 <body>
@@ -565,6 +645,20 @@
           <input type="text" id="searchInput" class="search-input" placeholder="Cari hadis, perawi, tema, atau kata kunci...">
           <button id="btnSearch" class="btn-search">Cari Hadis</button>
         </div>
+    
+        <!-- BAGIAN TENGAH: Container Hasil Pencarian -->
+    <div id="resultsWrapper" class="results-wrapper">
+      <div class="results-header">
+        <div class="results-count">
+          Menampilkan hasil untuk: <strong id="queryTerm">-</strong>
+        </div>
+      </div>
+
+      <!-- Area Tempat Kartu Hadis Ditampilkan -->
+      <div id="resultsList" class="results-list">
+        <!-- Konten diisi otomatis oleh JavaScript -->
+      </div>
+    </div>    
 
         <div class="tags-container">
           <span class="tags-label">Contoh pencarian:</span>
@@ -621,19 +715,55 @@
         </div>
       </div>
     </div>
+  <!-- BAGIAN FOOTER: Navigasi Bawah & Hak Cipta -->  
+<footer class="footer-container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3 class="footer-title">PROJECT MIZAN</h3>
+          <p class="footer-desc">
+            Platform mesin pencari hadis digital yang mempermudah pencarian, penelusuran, dan pemahaman hadis-hadis autentik.
+          </p>
+        </div>
 
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4>Navigasi</h4>
+            <ul>
+              <li><a href="#">Beranda</a></li>
+              <li><a href="#">Pencarian</a></li>
+              <li><a href="#">Bookmark</a></li>
+              <li><a href="#">Tentang Project</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h4>Sumber Data</h4>
+            <ul>
+              <li><a href="#">Shahih Bukhari</a></li>
+              <li><a href="#">Shahih Muslim</a></li>
+              <li><a href="#">Sunan Abu Daud</a></li>
+              <li><a href="#">Sunan At-Tirmidzi</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Project Mizan. Designed & Developed by <strong>Deny D</strong> (--sendaljepitmushola--).</p>
+      </div>
+    </footer>  
   </div>
 
   <!-- JAVASCRIPT LOGIC (INTEGRASI API FASTAPI) -->
   <script>
     // Deteksi otomatis Host Localhost vs GitHub Codespaces
     function getApiBaseUrl() {
-      const hostname = window.location.hostname;
-      if (hostname.includes("app.github.dev")) {
-        return `https://${hostname.replace(/-[0-9]+\./, "-8000.")}`;
-      }
-      return "http://127.0.0.1:8000";
-    }
+  const hostname = window.location.hostname;
+  if (hostname.includes("app.github.dev")) {
+    // Mengubah port pada domain Codespaces dengan rapi
+    return `https://${hostname.replace(/-[0-9]+\.app\.github\.dev$/, '')}-8000.app.github.dev`;
+  }
+  return "";
+}
 
     const API_BASE_URL = getApiBaseUrl();
 
@@ -646,88 +776,107 @@
     let debounceTimer;
 
     async function performSearch(keyword) {
-      const term = keyword.trim();
-      
-      // Jika kolom pencarian kosong, sembunyikan area hasil
-      if (!term) {
-        resultsWrapper.style.display = 'none';
-        return;
-      }
+  const term = keyword.trim();
+  
+  // Jika kolom pencarian kosong, sembunyikan area hasil
+  if (!term) {
+    resultsWrapper.style.display = 'none';
+    return;
+  }
 
-      queryTerm.textContent = `"${keyword}"`;
-      resultsWrapper.style.display = 'flex';
+  queryTerm.textContent = `"${keyword}"`;
+  resultsWrapper.style.display = 'flex';
 
-      // Indikator Loading
-      resultsList.innerHTML = `
-        <div class="empty-state">
-          <h3>Mencari hadis...</h3>
-          <p>Menghubungkan ke database Mizan...</p>
+  // Indikator Loading
+  resultsList.innerHTML = `
+    <div class="empty-state">
+      <h3>Mencari hadis...</h3>
+      <p>Menghubungkan ke database Mizan...</p>
+    </div>
+  `;
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/hadiths/search?q=${encodeURIComponent(term)}`);
+    
+    if (!response.ok) {
+      throw new Error(`Server Error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    
+    // AMBIL ARRAY-NYA DENGAN AMAN:
+    // Mengekstrak array dari data.results atau data.data atau data itu sendiri jika sudah berupa array
+    const list = Array.isArray(data) ? data : (data.results || data.data || []);
+    
+    renderResults(list);
+  } catch (error) {
+    console.error("Gagal mengambil data hadis:", error);
+    resultsList.innerHTML = `
+      <div class="empty-state">
+        <h3 style="color: #EF4444;">Koneksi Backend Terputus</h3>
+        <p>Gagal terhubung ke <code>${API_BASE_URL}</code>.<br>Pastikan Port 8000 di tab <strong>PORTS</strong> VS Code sudah di-set ke <strong>PUBLIC</strong>.</p>
+      </div>
+    `;
+  }
+}
+
+function renderResults(results) {
+  resultsList.innerHTML = '';
+
+  // Mencegah error jika parameter yang masuk bukan array
+  const items = Array.isArray(results) ? results : [];
+
+  if (items.length === 0) {
+    resultsList.innerHTML = `
+      <div class="empty-state">
+        <h3>Hadis tidak ditemukan</h3>
+        <p>Coba kata kunci lain seperti <strong>niat</strong>, <strong>iman</strong>, atau <strong>shalat</strong>.</p>
+      </div>
+    `;
+    return;
+  }
+
+  items.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'hadith-card';
+    
+    // Ambil nilai properti dengan fallback lengkap
+    const hadithNum = item.hadith_number || item.number || '-';
+    const bookName = item.book_name || item.book_id || 'Kitab Hadis';
+    const arabText = item.arabic || item.arab || 'Teks Arab tidak tersedia.';
+    
+    // PERBAIKAN UTAMA: Prioritaskan item.translation agar mengambil terjemahan yang sesuai dengan Arabnya
+    const transText = item.translation || item.terjemah || item.indonesia || item.translation_id || 'Terjemahan tidak tersedia.';
+
+    // Sanitasi teks terjemahan agar tidak merusak fungsi onclick saat ada karakter backtick
+    const safeTrans = transText.replace(/`/g, "'").replace(/"/g, '&quot;');
+
+    card.innerHTML = `
+      <div class="hadith-header">
+        <div class="hadith-meta">
+          <span class="kitab-badge">${bookName}</span>
+          <span class="hadith-number">No. ${hadithNum}</span>
         </div>
-      `;
+        <span class="grade-badge">✓ ID: #${item.id || item.hadith_id || hadithNum}</span>
+      </div>
 
-      try {
-        const response = await fetch(`${API_BASE_URL}/hadiths/search?q=${encodeURIComponent(term)}`);
-        
-        if (!response.ok) {
-          throw new Error(`Server Error: ${response.status}`);
-        }
+      <div class="hadith-arabic">${arabText}</div>
 
-        const data = await response.json();
-        renderResults(data);
-      } catch (error) {
-        console.error("Gagal mengambil data hadis:", error);
-        resultsList.innerHTML = `
-          <div class="empty-state">
-            <h3 style="color: #EF4444;">Koneksi Backend Terputus</h3>
-            <p>Gagal terhubung ke <code>${API_BASE_URL}</code>.<br>Pastikan Port 8000 di tab <strong>PORTS</strong> VS Code sudah di-set ke <strong>PUBLIC</strong>.</p>
-          </div>
-        `;
-      }
-    }
+      <div class="hadith-translation">
+        "${transText}"
+      </div>
 
-    function renderResults(results) {
-      resultsList.innerHTML = '';
-
-      if (!results || results.length === 0) {
-        resultsList.innerHTML = `
-          <div class="empty-state">
-            <h3>Hadis tidak ditemukan</h3>
-            <p>Coba kata kunci lain dalam Bahasa Inggris seperti <strong>intention</strong>, <strong>prayer</strong>, atau <strong>knowledge</strong>.</p>
-          </div>
-        `;
-        return;
-      }
-
-      results.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'hadith-card';
-        card.innerHTML = `
-          <div class="hadith-header">
-            <div class="hadith-meta">
-              <span class="kitab-badge">Hadis System</span>
-              <span class="hadith-number">No. ${item.hadith_number}</span>
-            </div>
-            <span class="grade-badge">✓ ID: #${item.id}</span>
-          </div>
-
-          <div class="hadith-arabic">${item.arabic || 'Teks Arab tidak tersedia.'}</div>
-
-          <div class="hadith-translation">
-            "${item.translation_id || 'Terjemahan tidak tersedia.'}"
-          </div>
-
-          <div class="hadith-actions">
-            <button class="btn-action" onclick="copyHadith('${item.hadith_number}', \`${(item.translation_id || '').replace(/`/g, '')}\`)">
-              📋 Salin
-            </button>
-            <button class="btn-action">🔖 Bookmark</button>
-            <button class="btn-action">🔗 Bagikan</button>
-          </div>
-        `;
-        resultsList.appendChild(card);
-      });
-    }
-
+      <div class="hadith-actions">
+        <button class="btn-action" onclick="copyHadith('${hadithNum}', \`${safeTrans}\`)">
+          📋 Salin
+        </button>
+        <button class="btn-action">🔖 Bookmark</button>
+        <button class="btn-action">🔗 Bagikan</button>
+      </div>
+    `;
+    resultsList.appendChild(card);
+  });
+}
     function triggerSearch(term) {
       searchInput.value = term;
       performSearch(term);
@@ -748,6 +897,6 @@
 
     btnSearch.addEventListener('click', () => performSearch(searchInput.value));
   </script>
-
+      
 </body>
 </html>

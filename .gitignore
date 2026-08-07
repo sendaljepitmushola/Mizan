@@ -12,3 +12,7 @@ __pycache__/
 # Linux
 .DS_Store
 database/sqlite/*.db
+backup_checkpoint/
+chroma_db/
+*.log
+*.bak

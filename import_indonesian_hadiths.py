@@ -1,100 +1,94 @@
-import asyncio
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy import text
 import os
+import glob
+import json
+import sqlite3
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+asyncpg://postgres:postgres@localhost:5432/mizan_db")
+def reset_and_import_english():
+    db_path = "database/sqlite/mizan.db"
+    
+    # Pastikan folder database ada
+    os.makedirs(os.path.dirname(db_path), exist_ok=True)
 
-if DATABASE_URL.startswith("postgresql://"):
-    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://", 1)
+    print(f"📂 Menghubungkan dan mereset database: {db_path}")
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
 
-engine = create_async_engine(DATABASE_URL, echo=True)
-AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
+    # Hapus tabel lama jika ada agar bersih dari data ID yang salah
+    cursor.execute("DROP TABLE IF EXISTS hadiths;")
 
-# Dataset Sampel Hadis Terjemahan Bahasa Indonesia (Bukhari & Muslim)
-DATASET_HADIS = [
-    {
-        "number": "1",
-        "arabic": "إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى",
-        "translation_id": "Sesungguhnya setiap amalan tergantung pada niatnya, dan setiap orang akan mendapatkan sesuai dengan apa yang ia niatkan. Barangsiapa yang hijrahnya karena Allah dan Rasul-Nya, maka hijrahnya kepada Allah dan Rasul-Nya."
-    },
-    {
-        "number": "2",
-        "arabic": "بُنِيَ الإِسْلَامُ عَلَى خَمْسٍ: شَهَادَةِ أَنْ لَا إِ لَهَ إِلَّا اللهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللهِ، وَإِقَامِ الصَّلَاةِ، وَإِيتَاءِ الزَّكَاةِ، وَالحَجِّ، وَصَوْمِ رَمَضَانَ",
-        "translation_id": "Islam dibangun di atas lima perkara: bersaksi bahwa tidak ada tuhan yang berhak disembah selain Allah dan Muhammad adalah utusan Allah, mendirikan shalat, menunaikan zakat, menunaikan ibadah haji, dan berpuasa di bulan Ramadhan."
-    },
-    {
-        "number": "3",
-        "arabic": "الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ",
-        "translation_id": "Seorang muslim yang sejati adalah orang yang orang-orang muslim lainnya selamat dari gangguan lisan dan tangannya."
-    },
-    {
-        "number": "4",
-        "arabic": "مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ",
-        "translation_id": "Barangsiapa yang beriman kepada Allah dan hari akhir, hendaklah ia berkata baik atau diam."
-    },
-    {
-        "number": "5",
-        "arabic": "لاَ يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ",
-        "translation_id": "Tidak sempurna iman salah seorang di antara kalian hingga ia mencintai saudaranya sebagaimana ia mencintai dirinya sendiri."
-    },
-    {
-        "number": "6",
-        "arabic": "طَلَبُ الْعِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ",
-        "translation_id": "Menuntut ilmu itu wajib atas setiap muslim."
-    },
-    {
-        "number": "7",
-        "arabic": "الدِّينُ النَّصِيحَةُ",
-        "translation_id": "Agama itu adalah nasihat."
-    },
-    {
-        "number": "8",
-        "arabic": "إِنَّ اللَّهَ طَيِّبٌ لاَ يَقْبَلُ إِلاَّ طَيِّبًا",
-        "translation_id": "Sesungguhnya Allah Maha Baik dan tidak menerima kecuali yang baik."
-    },
-    {
-        "number": "9",
-        "arabic": "اتَّقِ اللَّهِ حَيْثُمَا كُنْتَ وَأَتْبِعِ السَّيِّئَةَ الْحَسَنَةَ تَمْحُهَا وَخَالِقِ النَّاسَ بِخُلُقٍ حَسَنٍ",
-        "translation_id": "Bertakwalah kepada Allah di mana saja engkau berada, iringilah keburukan dengan kebaikan niscaya kebaikan itu akan menghapusnya, dan pergatullah manusia dengan akhlak yang baik."
-    },
-    {
-        "number": "10",
-        "arabic": "الصَّلاَةُ نُورٌ وَالصَّدَقَةُ بُرْهَانٌ وَالصَّبْرُ ضِيَاءٌ",
-        "translation_id": "Shalat adalah cahaya, sedekah adalah bukti, dan sabar adalah sinar."
-    }
-]
+    # Buat ulang tabel
+    cursor.execute("""
+        CREATE TABLE hadiths (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            book_id TEXT,
+            chapter_id TEXT,
+            hadith_number TEXT,
+            arabic TEXT,
+            translation_en TEXT,
+            translation_id TEXT,
+            UNIQUE(book_id, hadith_number) ON CONFLICT REPLACE
+        );
+    """)
 
-async def init_db_and_import():
-    print("🚀 Memproses data hadis Bahasa Indonesia lokal...")
+    raw_dir = "database/raw/datasets/hadith-json/db"
+    json_files = glob.glob(f"{raw_dir}/**/*.json", recursive=True)
 
-    async with AsyncSessionLocal() as session:
-        print("📥 Memasukkan data ke PostgreSQL...")
-        
-        insert_query = text("""
-            INSERT INTO hadiths (hadith_number, arabic, translation_id)
-            VALUES (:hadith_number, :arabic, :translation_id)
-            ON CONFLICT (hadith_number) 
-            DO UPDATE SET 
-                arabic = EXCLUDED.arabic,
-                translation_id = EXCLUDED.translation_id;
-        """)
+    if not json_files:
+        print(f"❌ Tidak ditemukan file JSON di {raw_dir}")
+        return
 
-        count = 0
-        for item in DATASET_HADIS:
-            await session.execute(
-                insert_query,
-                {
-                    "hadith_number": str(item["number"]),
-                    "arabic": item["arabic"],
-                    "translation_id": item["translation_id"]
-                }
-            )
-            count += 1
+    print(f"📚 Ditemukan {len(json_files)} file JSON. Memulai impor teks Bahasa Inggris...")
 
-        await session.commit()
-        print(f"🎉 SUKSES! Total {count} hadis Bahasa Indonesia berhasil masuk ke database!")
+    total_inserted = 0
+
+    for file_path in json_files:
+        path_parts = file_path.split(os.sep)
+        book_id = path_parts[-2] if len(path_parts) >= 2 else "general"
+        chapter_file = os.path.basename(file_path).replace('.json', '')
+
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                items = data if isinstance(data, list) else data.get("hadiths", data.get("data", []))
+
+                rows_to_insert = []
+                for idx, item in enumerate(items, 1):
+                    # Ambil nomor hadis
+                    h_num = str(item.get("idInBook", item.get("id", idx)))
+                    h_arab = item.get("arabic", "")
+                    
+                    # Ambil terjemahan Bahasa Inggris dari objek english
+                    eng_obj = item.get("english", {})
+                    if isinstance(eng_obj, dict):
+                        narrator = eng_obj.get("narrator", "")
+                        text = eng_obj.get("text", "")
+                        h_trans_en = f"{narrator}\n{text}".strip()
+                    else:
+                        h_trans_en = str(eng_obj) if eng_obj else ""
+
+                    if h_arab or h_trans_en:
+                        rows_to_insert.append((
+                            book_id,
+                            chapter_file,
+                            h_num,
+                            h_arab,
+                            h_trans_en,
+                            "" # translation_id dibiarkan kosong dulu
+                        ))
+
+                if rows_to_insert:
+                    cursor.executemany("""
+                        INSERT OR REPLACE INTO hadiths (book_id, chapter_id, hadith_number, arabic, translation_en, translation_id)
+                        VALUES (?, ?, ?, ?, ?, ?)
+                    """, rows_to_insert)
+                    total_inserted += len(rows_to_insert)
+
+        except Exception as e:
+            print(f"⚠️ Gagal membaca {file_path}: {e}")
+
+    conn.commit()
+    conn.close()
+    print(f"\n✅ REFRESH SUKSES! Total {total_inserted} hadis berhasil dimasukkan dengan Bahasa Inggris yang akurat.")
 
 if __name__ == "__main__":
-    asyncio.run(init_db_and_import())
+    reset_and_import_english()

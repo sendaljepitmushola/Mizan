@@ -1,59 +1,48 @@
-async function loadHadiths() {
+document.addEventListener('DOMContentLoaded', async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = urlParams.get('q') || urlParams.get('query') || '';
+    
+    // Set isi kolom input pencarian
+    document.querySelectorAll('input[type="text"], input[type="search"]').forEach(input => {
+        if (query) input.value = query;
+    });
 
-    const params = new URLSearchParams(window.location.search);
+    if (query) {
+        const results = await searchHadiths(query);
+        renderResults(results);
+    }
+});
 
-    const slug = params.get("book");
+function renderResults(hadiths) {
+    const container = document.getElementById('hadith-container') || 
+                      document.getElementById('results') || 
+                      document.querySelector('.hadith-list') || 
+                      document.getElementById('hadiths-list');
 
-    if (!slug) {
-        document.getElementById("book-title").textContent =
-            "Kitab tidak ditemukan";
+    if (!container) return;
 
-        document.getElementById("hadiths").textContent =
-            "Parameter kitab tidak tersedia.";
-
+    if (!hadiths || hadiths.length === 0) {
+        container.innerHTML = '<div class="text-center p-5 text-muted">Data tidak ditemukan atau backend belum merespon.</div>';
         return;
     }
 
-    // Ambil informasi kitab
-    const bookResponse = await fetch(API_URL + "/books/" + slug);
-    const book = await bookResponse.json();
+    container.innerHTML = hadiths.map(h => {
+        // Tampilkan terjemahan Bahasa Indonesia dari SQLite
+        const translationText = h.translation_id || h.translation || 'Terjemahan tidak tersedia';
+        const bookName = h.book_name || h.book_id || 'Kitab Hadis';
+        const hadithNum = h.hadith_number || h.number || '-';
+        const arabicText = h.arabic || '';
 
-    document.getElementById("book-title").textContent =
-        book.title_en;
-
-    // Ambil daftar hadis
-    const hadithResponse = await fetch(
-        API_URL + "/books/" + slug + "/hadiths"
-    );
-
-    const hadiths = await hadithResponse.json();
-
-    const container = document.getElementById("hadiths");
-
-    container.innerHTML = "";
-
-    hadiths.forEach(hadith => {
-
-        const div = document.createElement("div");
-
-        div.className = "book";
-
-        div.innerHTML = `
-            <strong>Hadith ${hadith.hadith_number}</strong><br>
-            ${hadith.translation_id.substring(0, 120)}...
+        return `
+            <div class="card mb-4 p-4 border rounded shadow-sm bg-white text-start">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="badge bg-primary">${bookName}</span>
+                    <span class="text-muted small">No. ${hadithNum}</span>
+                </div>
+                ${arabicText ? `<div class="arabic-text text-end fs-4 mb-3" style="font-family: 'Amiri', serif; line-height: 2;">${arabicText}</div>` : ''}
+                <div class="translation-text text-dark mb-3" style="white-space: pre-line;">${translationText}</div>
+                <div class="text-muted small">✓ ID: #${h.id || h.hadith_id}</div>
+            </div>
         `;
-
-        div.onclick = () => {
-
-            window.location.href =
-                `hadith.html?book=${slug}&number=${hadith.hadith_number}`;
-
-        };
-
-        container.appendChild(div);
-
-    });
-
+    }).join('');
 }
-
-loadHadiths();
